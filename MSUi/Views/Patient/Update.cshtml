@@ -1,0 +1,42 @@
+﻿@model Patient 
+
+@{
+    ViewData["Title"] = "Mise à jour du patient";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Update" asp-route-id="@Model.Id" method="post">
+    <div class="form-group">
+        <label asp-for="Prenom">Prénom</label>
+        <input asp-for="Prenom" class="form-control" />
+        <span asp-validation-for="Prenom" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Nom">Nom</label>
+        <input asp-for="Nom" class="form-control" />
+        <span asp-validation-for="Nom" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateDeNaissance">Date de naissance</label>
+        <input asp-for="DateDeNaissance" type="date" class="form-control" />
+        <span asp-validation-for="DateDeNaissance" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Genre">Genre</label>
+        <input asp-for="Genre" class="form-control" />
+        <span asp-validation-for="Genre" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Adresse">Adresse</label>
+        <input asp-for="Adresse" class="form-control" />
+        <span asp-validation-for="Adresse" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tel">Téléphone</label>
+        <input asp-for="Tel" class="form-control" />
+        <span asp-validation-for="Tel" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+
