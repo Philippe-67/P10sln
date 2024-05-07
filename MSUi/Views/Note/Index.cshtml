@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MSUi.Models.Note>
+
+@{
+    ViewData["Title"] = "Liste des Notes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PatId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+
+
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                    <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -13,7 +13,7 @@ namespace MSUi.Controllers
         {
 
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://Localhost:7002");
+            _httpClient.BaseAddress = new Uri("https://Localhost:7001");
 
         }
         [HttpGet]
@@ -77,48 +77,7 @@ namespace MSUi.Controllers
                 return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}. Détails : {errorMessage}");
             }
         }
-        //// [HttpPost]
-        //public async Task<IActionResult> Update(int id, Patient patient)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(patient); // Retourne la vue avec les erreurs de validation
-        //    }
-
-        //    var json = JsonConvert.SerializeObject(patient);
-        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
-        //    HttpResponseMessage response = await _httpClient.PutAsync($"/api/Patient/{id}", content);
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    else if (response.StatusCode == HttpStatusCode.NotFound)
-        //    {
-        //        return NotFound(); // Gérer le cas où le patient n'existe pas
-        //    }
-        //    else
-        //    {
-        //        string errorMessage = await response.Content.ReadAsStringAsync();
-        //        return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}. Détails : {errorMessage}");
-        //    }
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Update(int id, Patient updatedPatient)
-        //{
-        //    // Code pour préparer les données de mise à jour, puis envoyer la requête HTTP PUT à votre API
-        //    HttpResponseMessage response = await _httpClient.PutAsync($"/api/Patient/{id}", new StringContent(JsonConvert.SerializeObject(updatedPatient), Encoding.UTF8, "application/json"));
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("Update");
-        //    }
-        //    else
-        //    {
-        //        string errorMessage = await response.Content.ReadAsStringAsync();
-        //        return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}. Détails : {errorMessage}");
-        //    }
+     
 
         // [HttpDelete]
         public async Task<IActionResult> Delete(int id)
