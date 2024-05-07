@@ -62,8 +62,8 @@
                 <td>
                     <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
                     <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
-                    <a asp-action="PatientNotes" asp-route-patId="@item.Id">Voir les notes</a>
-
+@*                     <a asp-action="PatientNotes" asp-route-patId="@item.Id">Voir les notes</a>
+ *@                        <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="Index">Notes</a>
                 </td>
             </tr>
         }
