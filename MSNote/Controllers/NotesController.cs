@@ -30,7 +30,7 @@ namespace MSNote.Controllers
 
         //    return note;
         //}
-        [HttpGet("bypatid/{patId}")]
+        [HttpGet("{patId}")]
         public async Task<ActionResult<List<Note>>> GetByPatId(int patId)
         {
             var notes = await _notesService.GetByPatIdAsync(patId);

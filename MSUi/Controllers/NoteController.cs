@@ -13,10 +13,10 @@ public class NoteController : Controller
         _httpClient.BaseAddress = new Uri("https://Localhost:7001");
 
     }
-    [HttpGet]
-    public async Task<IActionResult> Index()
+    [HttpGet("Note/{patId}")]
+    public async Task<IActionResult> Index(int patId)
     {
-        HttpResponseMessage response = await _httpClient.GetAsync("/api/Notes"); 
+        HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{patId}"); 
         if (response.IsSuccessStatusCode)
         {
             string responseData = await response.Content.ReadAsStringAsync();

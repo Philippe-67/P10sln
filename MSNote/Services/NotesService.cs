@@ -29,7 +29,7 @@ namespace MSNote.Services
         //public async Task<Note?> GetAsync(int patId) =>
         //  await _notesCollection.Find(x => x.PatId == patId).FirstOrDefaultAsync();
         public async Task<List<Note>> GetByPatIdAsync(int patId) =>
-    await _notesCollection.Find(x => x.PatId == patId).ToListAsync();
+          await _notesCollection.Find(x => x.PatId == patId).ToListAsync();
 
         public async Task CreateAsync(Note newNote) =>
             await _notesCollection.InsertOneAsync(newNote);
