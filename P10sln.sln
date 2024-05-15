@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSUi", "MSUi\MSUi.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway", "Gateway\Gateway.csproj", "{66961F4F-F6F9-41D8-B398-A16449ACD823}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNote", "MSNote\MSNote.csproj", "{0680525A-111D-4570-BE42-69DECA173828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSNote", "MSNote\MSNote.csproj", "{0680525A-111D-4570-BE42-69DECA173828}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSDiagnostic", "MSDiagnostic\MSDiagnostic.csproj", "{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0680525A-111D-4570-BE42-69DECA173828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0680525A-111D-4570-BE42-69DECA173828}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0680525A-111D-4570-BE42-69DECA173828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

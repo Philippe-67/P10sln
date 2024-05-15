@@ -24,10 +24,7 @@ namespace MSNote.Services
         public async Task<List<Note>> GetAsync() =>
         await _notesCollection.Find(_ => true).ToListAsync();
 
-        //public async Task<Note?> GetAsync(string id) =>
-        //    await _notesCollection.Find(x => x.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
-        //public async Task<Note?> GetAsync(int patId) =>
-        //  await _notesCollection.Find(x => x.PatId == patId).FirstOrDefaultAsync();
+        
         public async Task<List<Note>> GetByPatIdAsync(int patId) =>
           await _notesCollection.Find(x => x.PatId == patId).ToListAsync();
 

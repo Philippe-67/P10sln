@@ -2,6 +2,19 @@
 
 @{
     ViewData["Title"] = "Liste des Patients";
+    static int CalculerAge(DateTime dateDeNaissance)
+    {
+        var aujourdhui = DateTime.Today;
+        var age = aujourdhui.Year - dateDeNaissance.Year;
+
+        if (dateDeNaissance.Date > aujourdhui.AddYears(-age))
+        {
+            age--;
+        }
+
+        return age;
+    }
+}
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -19,6 +32,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateDeNaissance)
+            </th>
+            <th>
+                Age
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
@@ -49,6 +65,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DateDeNaissance)
                 </td>
+                   
                 <td>
                     @Html.DisplayFor(modelItem => item.Genre)
                 </td>

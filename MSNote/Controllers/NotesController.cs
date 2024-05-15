@@ -18,18 +18,7 @@ namespace MSNote.Controllers
         public async Task<List<Note>> Get() =>
             await _notesService.GetAsync();
 
-        //[HttpGet("{patId}")]
-        //public async Task<ActionResult<Note>> Get(int patId)
-        //{
-        //    var note = await _notesService.GetAsync(patId);
-
-        //    if (note is null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return note;
-        //}
+        
         [HttpGet("{patId}")]
         public async Task<ActionResult<List<Note>>> GetByPatId(int patId)
         {
@@ -37,7 +26,8 @@ namespace MSNote.Controllers
 
             if (notes.Count == 0)
             {
-                return NotFound();
+                //return NotFound();
+                return Content("ce patient n a pas de note");
             }
 
             return notes;

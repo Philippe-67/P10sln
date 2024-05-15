@@ -16,12 +16,20 @@ public class NoteController : Controller
     [HttpGet("Note/{patId}")]
     public async Task<IActionResult> Index(int patId)
     {
-        HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{patId}"); 
+        HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{patId}");
         if (response.IsSuccessStatusCode)
         {
             string responseData = await response.Content.ReadAsStringAsync();
-            var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
-            return View(notes);
+            try
+            {
+                var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
+
+                return View(notes);
+            }
+            catch (JsonSerializationException)
+            {
+                return Content("Ce patient n'a pas de note");
+            }
         }
         else
         {
