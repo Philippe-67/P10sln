@@ -128,29 +128,30 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithNotes",
-      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "msdiagnostic",
           "Port": 7005
         }
       ],
-      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithNotes",
+      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithNotes",
+      "DownstreamScheme": "https",
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithNotes"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
+      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "msdiagnostic",
+          "Port": 7005
+        }
+      ],
+  
       "UpstreamHttpMethod": [ "Get" ]
     }
-    //{
-    //  "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
-    //  "DownstreamScheme": "http",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "msdiagnostic",
-    //      "Port": 7005
-    //    }
-    //  ],
-    //  "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
-    //  "UpstreamHttpMethod": [ "Get" ]
-    //}
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7001"
