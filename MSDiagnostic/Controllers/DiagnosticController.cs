@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using MSDiagnostic.Models;
-using System.Net.Http;
 using System.Text.RegularExpressions;
 
 namespace MSDiagnosticService.Controllers
@@ -21,36 +20,36 @@ namespace MSDiagnosticService.Controllers
             _noteClient.BaseAddress = new Uri("https://Localhost:7001");
         }
 
-        [HttpGet("patientsWithNotes")]
-        public async Task<IActionResult> GetPatientsWithNotes()
-        {
-            try
-            {
-                HttpResponseMessage responsePatients = await _patientClient.GetAsync("api/Patient");
-                responsePatients.EnsureSuccessStatusCode();
-                var patients = await responsePatients.Content.ReadAsAsync<IEnumerable<Patient>>();
+        //[HttpGet("patientsWithNotes")]
+        //public async Task<IActionResult> GetPatientsWithNotes()
+        //{
+        //    try
+        //    {
+        //        HttpResponseMessage responsePatients = await _patientClient.GetAsync("api/Patient");
+        //        responsePatients.EnsureSuccessStatusCode();
+        //        var patients = await responsePatients.Content.ReadAsAsync<IEnumerable<Patient>>();
 
-                List<DiagnosticData> diagnosticDatas = new List<DiagnosticData>();
-                foreach (var patient in patients)
-                {
-                    int age = CalculateAge(patient.DateDeNaissance);
+        //        List<DiagnosticData> diagnosticDatas = new List<DiagnosticData>();
+        //        foreach (var patient in patients)
+        //        {
+        //            int age = CalculateAge(patient.DateDeNaissance);
 
-                    HttpResponseMessage responseNotes = await _noteClient.GetAsync($"api/Notes/{patient.Id}");
-                    responseNotes.EnsureSuccessStatusCode();
-                    var notes = await responseNotes.Content.ReadAsAsync<IEnumerable<Note>>();
+        //            HttpResponseMessage responseNotes = await _noteClient.GetAsync($"api/Notes/{patient.Id}");
+        //            responseNotes.EnsureSuccessStatusCode();
+        //            var notes = await responseNotes.Content.ReadAsAsync<IEnumerable<Note>>();
 
-                    var (triggerCount, foundTriggers) = CountTriggers(notes);
+        //            var (triggerCount, foundTriggers) = CountTriggers(notes);
 
-                    diagnosticDatas.Add(new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers });
-                }
+        //            diagnosticDatas.Add(new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers });
+        //        }
 
-                return Ok(diagnosticDatas);
-            }
-            catch (HttpRequestException ex)
-            {
-                return StatusCode(500, "Une erreur s'est produite lors de la récupération des informations : " + ex.Message);
-            }
-        }
+        //        return Ok(diagnosticDatas);
+        //    }
+        //    catch (HttpRequestException ex)
+        //    {
+        //        return StatusCode(500, "Une erreur s'est produite lors de la récupération des informations : " + ex.Message);
+        //    }
+        //}
 
 
 
@@ -94,137 +93,88 @@ namespace MSDiagnosticService.Controllers
             int patientAge = patientData.Age;
             string patientGender = patientData.Patient.Genre;
 
-            if (triggerCount == 0)
+            if (triggerCount <=1)
             {
                 return "None";
             }
-            else if (triggerCount >= 2 && triggerCount <= 5 && patientAge > 30)
+            else if ((patientGender == "M" || patientGender == "F") && (patientAge > 30) && (triggerCount >= 2 && triggerCount <= 5))
             {
                 return "Borderline";
             }
-            else if (patientAge < 30)
+            else if ((patientGender == "M" || patientGender == "F") && (patientAge > 30) && (triggerCount >= 6 && triggerCount <= 7))
             {
-                if (patientGender == "M" && triggerCount >= 3)
-                {
-                    return "In Danger";
-                }
-                else if (patientGender == "F" && triggerCount >= 4)
-                {
-                    return "In Danger";
-                }
+                return "Danger";
             }
-            else
+            else if ((patientGender == "M" && patientAge < 30) && (triggerCount == 3))
             {
-                if (patientGender == "M" && triggerCount >= 6)
-                {
-                    return "In Danger";
-                }
-                else if (patientGender == "F" && triggerCount >= 7)
-                {
-                    return "In Danger";
-                }
+                return "Danger";
             }
-
-            if (patientAge < 30)
-            {
-                if (patientGender == "M" && triggerCount >= 5)
-                {
-                    return "Early onset";
-                }
-                else if (patientGender == "F" && triggerCount >= 7)
-                {
-                    return "Early onset";
-                }
+            else if ((patientGender == "F" && patientAge < 30) && (triggerCount == 4))
+            { 
+                    return "Danger";
             }
-            else
+            else if ((patientGender == "M" && patientAge < 30) && (triggerCount >= 5))
             {
-                if (patientGender == "M" && triggerCount >= 8)
-                {
-                    return "Early onset";
-                }
-                else if (patientGender == "F" && triggerCount >= 8)
-                {
-                    return "Early onset";
-                }
+                return "Early Onset";
+            }
+            else if ((patientGender == "F" && patientAge < 30) && (triggerCount >=7))
+            {
+                return "Early Onset";
+            }
+            else if ((patientGender == "M" || patientGender == "F") && (patientAge > 30) && (triggerCount >= 8 ))
+            {
+                return "Early Onset";
+            }
+                return "None";
             }
 
-            return "None";
-        }
-        private int CalculateAge(DateTime dateDeNaissance)
-        {
-            DateTime today = DateTime.Today;
-            int age = today.Year - dateDeNaissance.Year;
-            if (dateDeNaissance > today.AddYears(-age)) age--;
-            return age;
-        }
 
-
-
-        //private (int count, List<string> foundTriggers) CountTriggers(IEnumerable<Note> notes)
-        //{
-        //    string[] triggers = new string[] { "Hémoglobine A1C", "Microalbumine", "Taille", "Poids", "Fumeur", "Fumeuse", "Anormal", "Cholestérol", "Vertiges", "Rechute", "Réaction", "Anticorps" };
-
-        //    var triggerCount = 0;
-        //    var foundTriggers = new List<string>();
-
-        //    foreach (var note in notes)
-        //    {
-        //        string noteContent = note.Notes.ToLower();
-        //        foreach (var trigger in triggers)
-        //        {
-        //            string pattern = $@"\b{Regex.Escape(trigger.ToLower())}\w*";
-        //            if (Regex.IsMatch(noteContent, pattern))
-        //            {
-        //                if (!foundTriggers.Contains(trigger))
-        //                {
-        //                    foundTriggers.Add(trigger);
-        //                    triggerCount++;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return (triggerCount, foundTriggers);
-        //}
-        private (int count, List<string> foundTriggers) CountTriggers(IEnumerable<Note> notes)
-        {
-            string[] triggers = new string[] { "Hémoglobine A1C", "Microalbumine", "Taille", "Poids", "Fumeur", "Fumeuse", "Anormal", "Cholestérol", "Vertiges", "Rechute", "Réaction", "Anticorps" };
-
-            var triggerCount = 0;
-            var foundTriggers = new List<string>();
-
-            foreach (var note in notes)
+            private int CalculateAge(DateTime dateDeNaissance)
             {
-                string noteContent = note.Notes.ToLower();
-                foreach (var trigger in triggers)
+                DateTime today = DateTime.Today;
+                int age = today.Year - dateDeNaissance.Year;
+                if (dateDeNaissance > today.AddYears(-age)) age--;
+                return age;
+            }
+           
+            private (int count, List<string> foundTriggers) CountTriggers(IEnumerable<Note> notes)
+            {
+                string[] triggers = new string[] { "Hémoglobine A1C", "Microalbumine", "Taille", "Poids", "Fumeur", "Fumeuse", "Anormal", "Cholestérol", "Vertiges", "Rechute", "Réaction", "Anticorps" };
+
+                var triggerCount = 0;
+                var foundTriggers = new List<string>();
+
+                foreach (var note in notes)
                 {
-                    string pattern = GetRegexPatternForTrigger(trigger);
-                    if (Regex.IsMatch(noteContent, pattern))
+                    string noteContent = note.Notes.ToLower();
+                    foreach (var trigger in triggers)
                     {
-                        if (!foundTriggers.Contains(trigger))
+                        string pattern = GetRegexPatternForTrigger(trigger);
+                        if (Regex.IsMatch(noteContent, pattern))
                         {
-                            foundTriggers.Add(trigger);
-                            triggerCount++;
+                            if (!foundTriggers.Contains(trigger))
+                            {
+                                foundTriggers.Add(trigger);
+                                triggerCount++;
+                            }
                         }
                     }
                 }
+
+                return (triggerCount, foundTriggers);
             }
 
-            return (triggerCount, foundTriggers);
-        }
-
-        private string GetRegexPatternForTrigger(string trigger)
-        {
-            switch (trigger)
+            private string GetRegexPatternForTrigger(string trigger)
             {
-                case "Fumeur":
-                    return @"\bfum(eur|euse|er|ant)?\b";
-                case "Vertiges":
-                    return @"\bvertige[s]?\b";
-                // Ajoutez d'autres cas pour chaque terme avec son expression régulière spécifique
-                default:
-                    return $@"\b{Regex.Escape(trigger.ToLower())}\w*";
+                switch (trigger)
+                {
+                    case "Fumeur":
+                        return @"\bfum(eur|euse|er|ant)?\b";
+                    case "Vertiges":
+                        return @"\bvertige[s]?\b";
+                    default:
+                        return $@"\b{Regex.Escape(trigger.ToLower())}\w*";
+                }
             }
         }
     }
-}

@@ -1,82 +1,3 @@
-//{
-//  "Routes": [
-//    {
-//      "DownstreamPathTemplate": "/api/Patient",
-//      "UpstreamPathTemplate": "/api/Patient",
-//      "DownstreamScheme": "https",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 7002
-//        }
-//      ],
-
-//      "UpstreamHttpMethod": [ "Get" ]
-
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/Patient/{id}",
-//      "UpstreamPathTemplate": "/api/Patient/{id}",
-//      "DownstreamScheme": "https",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 7002
-//        }
-//      ],
-
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
-
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/Notes",
-//      "UpstreamPathTemplate": "/api/Notes",
-//      "DownstreamScheme": "https",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 7003
-//        }
-//      ],
-
-//      "UpstreamHttpMethod": [ "Get" ]
-
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/Notes/{patId}",
-//      "UpstreamPathTemplate": "/api/Notes/{patId}",
-//      "DownstreamScheme": "https",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 7003
-//        }
-//      ],
-//      "UpstreamHttpMethod": [ "Get" ]
-
-//    },
-
-//    {
-//      "DownstreamPathTemplate": "/api/diagnostic/patient/{id}",
-//      "UpstreamPathTemplate": "/api/Patient/{id}",
-//      "DownstreamScheme": "https",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 7004
-//        }
-//      ],
-//      "UpstreamHttpMethod": [ "Get" ]
-//    }
-
-
-
-
-//  ],
-//  "GlobalConfiguration": {
-//    "BaseUrl": "https://localhost:7001"
-//  }
-//}
 {
   "Routes": [
     {
@@ -128,18 +49,6 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "msdiagnostic",
-          "Port": 7005
-        }
-      ],
-      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithNotes",
-      "DownstreamScheme": "https",
-      "UpstreamHttpMethod": [ "Get" ],
-      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithNotes"
-    },
-    {
       "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
       "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
       "DownstreamScheme": "https",
@@ -149,7 +58,6 @@
           "Port": 7005
         }
       ],
-  
       "UpstreamHttpMethod": [ "Get" ]
     }
   ],
