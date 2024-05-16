@@ -1,9 +1,10 @@
 ﻿@model List<MSUi.Models.DiagnosticData>
 
-<h2>Patients with Diabetes Risk</h2>
+<h2>Risque diabétique </h2>
 <table>
     <tr>
         <th>Name</th>
+        <th>Id</th>
         <th>Age</th>
         <th>Gender</th>
         <th>Trigger Count</th>
@@ -13,10 +14,11 @@
     {
         <tr>
             <td>@patient.PatientName</td>
+            <td>@patient.PatId</td>
             <td>@patient.Age</td>
             <td>@patient.Gender</td>
             <td>@patient.TriggerCount</td>
             <td>@patient.RiskLevel</td>
         </tr>
     }
-</table>
+</table> 

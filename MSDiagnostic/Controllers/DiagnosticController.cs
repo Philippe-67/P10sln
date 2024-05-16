@@ -20,39 +20,6 @@ namespace MSDiagnosticService.Controllers
             _noteClient.BaseAddress = new Uri("https://Localhost:7001");
         }
 
-        //[HttpGet("patientsWithNotes")]
-        //public async Task<IActionResult> GetPatientsWithNotes()
-        //{
-        //    try
-        //    {
-        //        HttpResponseMessage responsePatients = await _patientClient.GetAsync("api/Patient");
-        //        responsePatients.EnsureSuccessStatusCode();
-        //        var patients = await responsePatients.Content.ReadAsAsync<IEnumerable<Patient>>();
-
-        //        List<DiagnosticData> diagnosticDatas = new List<DiagnosticData>();
-        //        foreach (var patient in patients)
-        //        {
-        //            int age = CalculateAge(patient.DateDeNaissance);
-
-        //            HttpResponseMessage responseNotes = await _noteClient.GetAsync($"api/Notes/{patient.Id}");
-        //            responseNotes.EnsureSuccessStatusCode();
-        //            var notes = await responseNotes.Content.ReadAsAsync<IEnumerable<Note>>();
-
-        //            var (triggerCount, foundTriggers) = CountTriggers(notes);
-
-        //            diagnosticDatas.Add(new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers });
-        //        }
-
-        //        return Ok(diagnosticDatas);
-        //    }
-        //    catch (HttpRequestException ex)
-        //    {
-        //        return StatusCode(500, "Une erreur s'est produite lors de la récupération des informations : " + ex.Message);
-        //    }
-        //}
-
-
-
         [HttpGet("patientsWithDiabetesRisk")]
 
         public async Task<IActionResult> GetPatientsWithDiabetesRisk()
@@ -86,7 +53,7 @@ namespace MSDiagnosticService.Controllers
                 return StatusCode(500, "Une erreur s'est produite lors de la récupération des informations : " + ex.Message);
             }
         }
-        [HttpGet]
+       [HttpGet]
         public string DetermineDiabetesRiskLevel(DiagnosticData patientData)
         {
             int triggerCount = patientData.TriggerCount;

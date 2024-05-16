@@ -5,6 +5,7 @@ namespace MSUi.Models
     public class DiagnosticData
     {
         public string PatientName { get; set; }
+        public string PatId { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
         public int TriggerCount { get; set; }

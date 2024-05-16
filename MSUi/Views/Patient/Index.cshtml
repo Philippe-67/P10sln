@@ -1,20 +1,7 @@
 ﻿@model IEnumerable<MSUi.Models.Patient>
 
 @{
-    ViewData["Title"] = "Liste des Patients";
-    static int CalculerAge(DateTime dateDeNaissance)
-    {
-        var aujourdhui = DateTime.Today;
-        var age = aujourdhui.Year - dateDeNaissance.Year;
-
-        if (dateDeNaissance.Date > aujourdhui.AddYears(-age))
-        {
-            age--;
-        }
-
-        return age;
-    }
-}
+   
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -44,6 +31,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiskLevel)
             </th>
             <th></th>
         </tr>
@@ -75,11 +65,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Tel)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiskLevel)
+                </td>
 
                 <td>
                     <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
                     <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
-                        <a asp-controller="Note" asp-action="Index" asp-route-patId="@item.Id">Voir les notes</a>
+                    <a asp-controller="Note" asp-action="Index" asp-route-patId="@item.Id">Voir les notes</a>
  @*                          <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="Index">Notes</a>
  *@                </td>
             </tr>
