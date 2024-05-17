@@ -90,7 +90,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-// pattern: "{controller=Home}/{action=Index}/{id?}");
-pattern: "{controller=Authentication}/{action=login}/{id?}");//ouvre l'application sur la page de login
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
