@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway", "Gateway\Gateway.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSNote", "MSNote\MSNote.csproj", "{0680525A-111D-4570-BE42-69DECA173828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSDiagnostic", "MSDiagnostic\MSDiagnostic.csproj", "{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSDiagnostic", "MSDiagnostic\MSDiagnostic.csproj", "{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
