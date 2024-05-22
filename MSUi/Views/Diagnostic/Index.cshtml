@@ -13,12 +13,13 @@
     @foreach (var patient in Model)
     {
         <tr>
-            <td>@patient.PatientName</td>
-            <td>@patient.PatId</td>
+            <td>@patient.Patient.Nom</td>
+            <td>@patient.Patient.Id</td>
             <td>@patient.Age</td>
-            <td>@patient.Gender</td>
+            <td>@patient.Patient.Genre</td>
             <td>@patient.TriggerCount</td>
             <td>@patient.RiskLevel</td>
+            
         </tr>
     }
 </table> 
