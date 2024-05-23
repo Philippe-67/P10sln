@@ -49,12 +49,24 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
-      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk",
+      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
+      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "msdiagnostic",
+          "Host": "localhost",
+          "Port": 7005
+        }
+      ],
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Diagnostic/patientDiagnostic/{patientId}",
+      "UpstreamPathTemplate": "/api/Diagnostic/patientDiagnostic/{patientId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
           "Port": 7005
         }
       ],

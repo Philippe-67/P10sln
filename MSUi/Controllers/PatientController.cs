@@ -8,14 +8,32 @@ namespace MSUi.Controllers
     public class PatientController : Controller
     {
         private readonly HttpClient _httpClient;
+     //   private readonly HttpClient _diagnosticClient;
 
         public PatientController(HttpClient httpClient)
         {
 
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://Localhost:7001");
+            //_diagnosticClient = httpClient;
+            //_httpClient.BaseAddress = new Uri("https://Localhost:7001");
 
         }
+        //[HttpGet]
+        //public async Task<IActionResult> Index()
+        //{
+        //    HttpResponseMessage response = await _httpClient.GetAsync("/api/Patient");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string responseData = await response.Content.ReadAsStringAsync();
+        //        var patients = JsonConvert.DeserializeObject<List<Patient>>(responseData);
+        //        return View(patients);
+        //    }
+        //    else
+        //    {
+        //        return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
+        //    }
+        //}
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -24,6 +42,25 @@ namespace MSUi.Controllers
             {
                 string responseData = await response.Content.ReadAsStringAsync();
                 var patients = JsonConvert.DeserializeObject<List<Patient>>(responseData);
+
+                // Récupérer le risque au diabète pour chaque patient à partir de l'API MSDiagnostic
+                foreach (var patient in patients)
+                {
+                    HttpResponseMessage responseDiagnostic = await _httpClient.GetAsync($"api/Diagnostic/patientDiagnostic/{patient.Id}");
+                    if (responseDiagnostic.IsSuccessStatusCode)
+                    {
+                        string diagnosticData = await responseDiagnostic.Content.ReadAsStringAsync();
+                        var diagnostic = JsonConvert.DeserializeObject<DiagnosticData>(diagnosticData);
+                        patient.RiskLevel = diagnostic.RiskLevel; // Mettre à jour le risque au diabète pour le patient
+                    }
+                    else
+                    {
+                        // Gérer les erreurs lors de la récupération du risque au diabète
+                        // par exemple, définir un risque par défaut ou gérer l'erreur autrement
+                        patient.RiskLevel = "Non disponible";
+                    }
+                }
+
                 return View(patients);
             }
             else

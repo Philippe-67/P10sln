@@ -4,8 +4,8 @@ namespace MSUi.Models
 {
     public class Patient
     {
-       
-            public int Id { get; set; }
+     //   public DiagnosticData diagnosticData { get; set; }
+        public int Id { get; set; }
             [Required(ErrorMessage = "le prénom est requis")]
             public string Prenom { get; set; }
             [Required(ErrorMessage = "le nom est requis")]

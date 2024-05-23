@@ -53,7 +53,39 @@ namespace MSDiagnosticService.Controllers
                 return StatusCode(500, "Une erreur s'est produite lors de la récupération des informations : " + ex.Message);
             }
         }
-       [HttpGet]
+        //
+        [HttpGet("patientDiagnostic/{patientId}")]
+        public async Task<IActionResult> GetPatientDiagnostic(int patientId)
+        {
+            try
+            {
+                HttpResponseMessage responsePatient = await _patientClient.GetAsync($"api/Patient/{patientId}");
+                responsePatient.EnsureSuccessStatusCode();
+                var patient = await responsePatient.Content.ReadAsAsync<Patient>();
+
+                int age = CalculateAge(patient.DateDeNaissance);
+
+                HttpResponseMessage responseNotes = await _noteClient.GetAsync($"api/Notes/{patientId}");
+                responseNotes.EnsureSuccessStatusCode();
+                var notes = await responseNotes.Content.ReadAsAsync<IEnumerable<Note>>();
+
+                var (triggerCount, foundTriggers) = CountTriggers(notes);
+
+                var riskLevel = DetermineDiabetesRiskLevel(new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers });
+
+               // var diagnosticData = new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers, RiskLevel = riskLevel };
+                var diagnosticData = new DiagnosticData {   RiskLevel = riskLevel };
+
+                return Ok(diagnosticData);
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(500, "Une erreur s'est produite lors de la récupération des informations : " + ex.Message);
+            }
+        }
+        //
+
+        [HttpGet]
         public string DetermineDiabetesRiskLevel(DiagnosticData patientData)
         {
             int triggerCount = patientData.TriggerCount;
