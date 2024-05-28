@@ -8,6 +8,8 @@ builder.Services.Configure<BookNoteDatabaseSettings>(
 
 builder.Services.AddSingleton<NotesService>();
 
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -24,6 +26,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseSession();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

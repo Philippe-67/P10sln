@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSUi.Models;
 using Newtonsoft.Json;
+using System.IO;
 
 public class NoteController : Controller
 {
@@ -35,6 +36,12 @@ public class NoteController : Controller
         {
             return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
         }
+    }
+        [HttpPost("Delete/{Id}")]
+        public async  Task<IActionResult> SupprimerNote(string Id)
+    {
+        HttpResponseMessage response = await _httpClient.DeleteAsync($"/api/Notes/{Id}");
+             return View("Index");
     }
 }
    

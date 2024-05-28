@@ -1,17 +1,6 @@
 {
   "Routes": [
-    //{
-    //  "DownstreamPathTemplate": "/api/Patient",
-    //  "UpstreamPathTemplate": "/api/Patient",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "localhost",
-    //      "Port": 7002
-    //    }
-    //  ],
-    //  "UpstreamHttpMethod": [ "Get" ]
-    //},
+
     {
       "DownstreamPathTemplate": "/api/Patient/{everything}",
       "UpstreamPathTemplate": "/api/Patient/{everything}",
@@ -22,21 +11,9 @@
           "Port": 7002
         }
       ],
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
-    },
-    //{
-    //  "DownstreamPathTemplate": "/api/Notes",
-    //  "UpstreamPathTemplate": "/api/Notes",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "localhost",
-    //      "Port": 7003
-    //    }
-    //  ],
-    //  "UpstreamHttpMethod": [ "Get" ]
-    //},
-    {
+      "UpstreamHttpMethod": [ "Get", "Post", "Put","Delete" ]
+        },
+     {
       "DownstreamPathTemplate": "/api/Notes/{everything}",
       "UpstreamPathTemplate": "/api/Notes/{everything}",
       "DownstreamScheme": "https",
@@ -46,8 +23,9 @@
           "Port": 7003
         }
       ],
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [ "Get","Delete" ]
     },
+    
     {
       "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
       "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
@@ -71,7 +49,7 @@
         }
       ],
       "UpstreamHttpMethod": [ "Get" ]
-    }
+       }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7001"

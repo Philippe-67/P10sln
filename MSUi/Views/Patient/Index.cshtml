@@ -3,6 +3,7 @@
 @{
    
 }
+<a asp-action="Create">Créer un nouveau patient</a>
 
 <h2>@ViewData["Title"]</h2>
 <table class="table">
@@ -20,9 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateDeNaissance)
             </th>
-          @*   <th>
-                Age
-            </th> *@
+         
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
@@ -72,6 +71,8 @@
                 <td>
                     <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
                     <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
+                    
+                    
                     <a asp-controller="Note" asp-action="Index" asp-route-patId="@item.Id">Voir les notes</a>
                         <a asp-controller="Diagnostic" asp-action="Index" asp-route-patId="@item.Id">Risques</a>
 

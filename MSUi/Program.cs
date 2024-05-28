@@ -18,8 +18,6 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-//-->ajoute la prise en charge de la session dans l' application, ce qui permet de stocker des données de session utilisateur entre les requêtes HTTP.
-builder.Services.AddSession();
 
 // Add identitypour configurer l'infrastructure d'authentification et d'autorisation basé sur les rôles et les users
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -84,12 +82,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();//necessaire
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+   //pattern: "{controller=Home}/{action=Index}/{id?}");
+pattern: "{controller=Authentication}/{action=Login}");
 
 app.Run();

@@ -31,11 +31,11 @@ namespace MSNote.Services
         public async Task CreateAsync(Note newNote) =>
             await _notesCollection.InsertOneAsync(newNote);
 
-        public async Task UpdateAsync(string id, Note updatedNote) =>
-            await _notesCollection.ReplaceOneAsync(x => x.Id == (id), updatedNote);
+        public async Task UpdateAsync(string Id, Note updatedNote) =>
+            await _notesCollection.ReplaceOneAsync(x => x.Id == (Id), updatedNote);
 
-        public async Task RemoveAsync(string id) =>
-            await _notesCollection.DeleteOneAsync(x => x.Id == (id));
+        public async Task RemoveAsync(string Id) =>
+            await _notesCollection.DeleteOneAsync(x => x.Id == (Id));
     }
 }
 

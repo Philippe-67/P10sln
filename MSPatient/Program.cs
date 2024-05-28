@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PatientDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//builder.Services.AddSession();
+
 
 // Add services to the container.
 
@@ -24,7 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+//app.UseSession();//necessaire
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

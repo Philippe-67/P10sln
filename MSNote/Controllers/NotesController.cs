@@ -40,5 +40,21 @@ namespace MSNote.Controllers
 
             return CreatedAtAction(nameof(Get), new { id = newNote.Id }, newNote);
         }
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            var note = await _notesService.GetAsync();
+         
+
+
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            await _notesService.RemoveAsync(Id);
+
+            return NoContent();
+        }
     }
 }
