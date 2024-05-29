@@ -141,7 +141,7 @@ namespace MSUi.Controllers
             if (response.IsSuccessStatusCode)
             {
                  return RedirectToAction("Index");
-              //return Ok(supprimerPatient);
+              
 
             }
             else if (response.StatusCode == HttpStatusCode.NotFound)

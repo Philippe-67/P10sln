@@ -23,7 +23,7 @@ public class NoteController : Controller
             string responseData = await response.Content.ReadAsStringAsync();
             try
             {
-                var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
+                List<Note>? notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
 
                 return View(notes);
             }
@@ -37,7 +37,7 @@ public class NoteController : Controller
             return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
         }
     }
-        [HttpPost("Delete/{Id}")]
+    [HttpPost("Delete/{Id}")]
         public async  Task<IActionResult> SupprimerNote(string Id)
     {
         HttpResponseMessage response = await _httpClient.DeleteAsync($"/api/Notes/{Id}");
