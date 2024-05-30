@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using MSUi.Data;
 using MSUi.Services;
 using Serilog;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add database connection
@@ -19,10 +19,12 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
-// Add identitypour configurer l'infrastructure d'authentification et d'autorisation basé sur les rôles et les users
+//// Add identitypour configurer l'infrastructure d'authentification et d'autorisation basé sur les rôles et les users
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
    .AddEntityFrameworkStores<UserDbContext>()
     .AddDefaultTokenProviders();//--> fournisseur de jetons
+
+//Configurer l'authentification JWT le 30 05 2024
 
 
 
@@ -88,7 +90,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-   //pattern: "{controller=Home}/{action=Index}/{id?}");
-pattern: "{controller=Authentication}/{action=Login}");
+   pattern: "{controller=Home}/{action=Index}/{id?}");
+//pattern: "{controller=Authentication}/{action=Login}");
 
 app.Run();

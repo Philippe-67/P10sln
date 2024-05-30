@@ -12,6 +12,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PatId)
             </th>
             <th>
@@ -27,6 +30,9 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.PatId)
                 </td>
                 <td>
@@ -38,10 +44,12 @@
 
 
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"asp-route-patId="@item.PatId">Supprimer</a>
                     <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
+                    <a asp-action="Create" asp-route-id="@item.Id" asp-route-patId="@item.PatId">Créer une note</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<a href="@Url.Action("Index", "Patient")" class="btn btn-primary">Retourner à la vue patient</a>

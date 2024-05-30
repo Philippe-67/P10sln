@@ -11,6 +11,7 @@ namespace MSNote.Models
         [BsonElement("PatId")]
         public int? PatId { get; set; }
         public string Patient { get; set; }
-        public string Notes { get; set; }
+       public string Notes { get; set; }
+        //public List<string> Notes { get; set; }  // Modifier la propriété Notes pour qu'elle soit une liste de chaînes de caractères
     }
 }

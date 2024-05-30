@@ -2,7 +2,7 @@
 
 namespace MSUi.Models
 {
-    public class Patient
+    public class Notes
     {
      //   public DiagnosticData diagnosticData { get; set; }
         public int Id { get; set; }

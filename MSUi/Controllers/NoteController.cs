@@ -2,6 +2,8 @@
 using MSUi.Models;
 using Newtonsoft.Json;
 using System.IO;
+using System.Net;
+using System.Text;
 
 public class NoteController : Controller
 {
@@ -23,13 +25,19 @@ public class NoteController : Controller
             string responseData = await response.Content.ReadAsStringAsync();
             try
             {
-                List<Note>? notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
-
-                return View(notes);
+                var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
+                if (notes.Any())
+                {
+                    return View(notes);
+                }
+                else
+                {
+                    return Content("Ce patient n'a pas de note");
+                }
             }
             catch (JsonSerializationException)
             {
-                return Content("Ce patient n'a pas de note");
+                return Content("Une erreur s'est produite lors de la désérialisation des données");
             }
         }
         else
@@ -37,11 +45,54 @@ public class NoteController : Controller
             return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
         }
     }
-    [HttpPost("Delete/{Id}")]
-        public async  Task<IActionResult> SupprimerNote(string Id)
+
+    
+
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(string id, int PatId)
     {
-        HttpResponseMessage response = await _httpClient.DeleteAsync($"/api/Notes/{Id}");
-             return View("Index");
+        HttpResponseMessage response = await _httpClient.DeleteAsync($"/api/Notes/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            //  return View(PatId);
+            return RedirectToAction("Index", new { patId = PatId });
+        }
+        else if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return NotFound();
+        }
+        else
+        {
+            //string errorMessage = await response.Content.ReadAsStringAsync();
+            return View("Error");
+            //return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}. Détails : {errorMessage}");
+        }
     }
+    //    [HttpGet]
+    //   // public async Task<IActionResult> Update(int id)
+    //    public async Task<IActionResult> Update(string Id, [FromBody] List<Note> updatedNotes)
+
+    //{
+    //    // Récupérer les données du patient depuis l'API ou la source de données appropriée
+    //    HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{Id}");
+
+    //        if (response.IsSuccessStatusCode)
+    //        {
+    //            var json = await response.Content.ReadAsStringAsync();
+    //            var note = JsonConvert.DeserializeObject<Notes>(json);
+
+    //            return View(note); // Retourner la vue avec les données du patient pour modification
+    //        }
+    //        else
+    //        {
+    //            return NotFound(); // Gérer le cas où le patient n'existe pas
+    //        }
+    //    }
+
+    //}
 }
+
+
+
    

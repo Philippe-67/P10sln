@@ -36,6 +36,11 @@ namespace MSNote.Services
 
         public async Task RemoveAsync(string Id) =>
             await _notesCollection.DeleteOneAsync(x => x.Id == (Id));
+
+        internal void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

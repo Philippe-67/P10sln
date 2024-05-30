@@ -61,7 +61,7 @@ namespace MSPatient.Controllers
                 return BadRequest();
             }
             _context.Entry(patient).State = EntityState.Modified;
-            _context.SaveChanges(); 
+            _context.SaveChanges();
             return NoContent();
         }
 

@@ -19,7 +19,7 @@ namespace MSNote.Controllers
         public async Task<List<Note>> Get() =>
             await _notesService.GetAsync();
 
-        
+
         [HttpGet("{patId}")]
         public async Task<ActionResult<List<Note>>> GetByPatId(int patId)
         {
@@ -27,12 +27,29 @@ namespace MSNote.Controllers
 
             if (notes.Count == 0)
             {
-                //return NotFound();
-                return Content("ce patient n a pas de note");
+                // return NotFound(new { message = "Aucune note enregistrée pour ce patient" });
+                // return Content("ce patient n a pas de note");
+                Note defaultNote = new Note
+                {
+                    Notes = "Aucune note enregistrée"
+                    // Autres propriétés à initialiser si nécessaire
+                };
+                return new List<Note> { defaultNote };
             }
-
             return notes;
         }
+
+        //[HttpPost]
+        //public IActionResult Create([FromBody] Note note)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _notesService.Add(note);
+        //        _notesService.SaveChanges();
+        //        return Ok(note);
+        //    }
+        //    return BadRequest(ModelState);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Post(Note newNote)
@@ -46,15 +63,36 @@ namespace MSNote.Controllers
         public async Task<IActionResult> Delete(string Id)
         {
             var note = await _notesService.GetAsync();
-           
+
             if (note == null)
             {
                 return NotFound();
             }
 
-             await _notesService.RemoveAsync(Id);
-           
+            await _notesService.RemoveAsync(Id);
+
             return NoContent();
         }
+
+        //    [HttpPut("{Id}")]
+        //  //  public async Task<IActionResult> Update(string Id, Note updatedNotes);
+        //        public async Task<IActionResult> Update(string Id, [FromBody] List<Note> updatedNotes)
+        //    {
+        //        var existingNote = await _notesService.GetByIdAsync(Id);
+
+        //        if (existingNote == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        existingNote.Notes = updatedNotes;
+        //       // existingNote.Notes= updatedNote.Notes;
+        //        // Mettez à jour d'autres propriétés au besoin
+
+        //        await _notesService.UpdateAsync(Id, existingNote);
+
+        //        return NoContent();
+        //    }
+        //}
     }
 }

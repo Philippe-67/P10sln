@@ -28,7 +28,7 @@ namespace MSUi.Controllers
             if (response.IsSuccessStatusCode)
             {
                 string responseData = await response.Content.ReadAsStringAsync();
-                var patients = JsonConvert.DeserializeObject<List<Patient>>(responseData);
+                var patients = JsonConvert.DeserializeObject<List<Notes>>(responseData);
 
 
                 foreach (var patient in patients)
@@ -63,7 +63,7 @@ namespace MSUi.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var patient = JsonConvert.DeserializeObject<Patient>(json);
+                var patient = JsonConvert.DeserializeObject<Notes>(json);
 
                 return View(patient); // Retourner la vue avec les données du patient pour modification
             }
@@ -75,8 +75,8 @@ namespace MSUi.Controllers
 
         // [HttpPost] pour traiter la soumission du formulaire avec les modifications du patient
       
-        [HttpPut]
-        public async Task<IActionResult> Update(int id, Patient patient)
+        [HttpPost] //avant j'avais [HttpPut) mais les modf n'étaient pas enregistrées
+        public async Task<IActionResult> Update(int id, Notes patient)
         {
             if (!ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace MSUi.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Patient patient)
+        public async Task<IActionResult> Create(Notes patient)
         {
             if (!ModelState.IsValid)
             {
