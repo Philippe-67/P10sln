@@ -1,84 +1,116 @@
-﻿@model IEnumerable<MSUi.Models.Notes>
+﻿@* @model IEnumerable<MSUi.Models.Patient>
 
 @{
    
 }
-<a asp-action="Create">Créer un nouveau patient</a>
+
+<a href="@Url.Action("Create", "Patient")" class="btn btn-primary">Créer un nouveau Patient</a>
+
 
 <h2>@ViewData["Title"]</h2>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Prenom)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nom)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateDeNaissance)
-            </th>
-         
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adresse)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tel)
-            </th>
+          
+            @if (User.IsInRole("praticien"))
+            {
             <th>
                 @Html.DisplayNameFor(model => model.RiskLevel)
-            </th>
-            <th></th>
+             </th>
+            }
         </tr>
     </thead>
     <tbody>
         @if (Model != null)
+        {
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Prenom)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nom)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateDeNaissance)
-                </td>
-                   
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adresse)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tel)
-                </td>
+           
+                if (User.IsInRole("praticien"))
+                {
                 <td>
                     @Html.DisplayFor(modelItem => item.RiskLevel)
-                </td>
-
+                </ td> 
+                 }
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                    <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
-                    
-                    
-                    <a asp-controller="Note" asp-action="Index" asp-route-patId="@item.Id">Voir les notes</a>
-                        <a asp-controller="Diagnostic" asp-action="Index" asp-route-patId="@item.Id">Risques</a>
-
- @*                          <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="Index">Notes</a>
- *@                </td>
+                        <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
+               </td>
             </tr>
+        }
+        }
+    </tbody>
+</table> *@
+
+@model IEnumerable<MSUi.Models.Patient>
+
+@{
+    ViewData["Title"] = "Liste des Patients";
+}
+
+<a href="@Url.Action("Create", "Patient")" class="btn btn-primary">Créer un nouveau Patient</a>
+
+<h2>@ViewData["Title"]</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Nom)
+            </th>
+            @if (User.IsInRole("praticien"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.First().RiskLevel)
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prenom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </td>
+                    @if (User.IsInRole("praticien"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RiskLevel)
+                        </td>
+                    }
+                    <td>
+                        <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
+                    </td>
+                    @if (User.IsInRole("praticien"))
+                    {
+                        <td>
+                           @* <a asp-action="Note" asp-route-id="@item.Id">Notes patients</a>*@
+                            <a href="@Url.Action("Index", "Note", new { patId=item.Id})">Lien vers les notes du patient</a>
+                    </td>
+                    }
+                </tr>
+            }
         }
     </tbody>
 </table>

@@ -23,22 +23,22 @@ public class NoteController : Controller
         if (response.IsSuccessStatusCode)
         {
             string responseData = await response.Content.ReadAsStringAsync();
-            try
-            {
+            //try
+            //{
                 var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
                 if (notes.Any())
                 {
                     return View(notes);
                 }
-                else
-                {
-                    return Content("Ce patient n'a pas de note");
-                }
-            }
-            catch (JsonSerializationException)
-            {
+                //else
+                //{
+                //    return Content("Ce patient n'a pas de note");
+                //}
+            //}
+            //catch (JsonSerializationException)
+            //{
                 return Content("Une erreur s'est produite lors de la désérialisation des données");
-            }
+           // }
         }
         else
         {
@@ -49,7 +49,7 @@ public class NoteController : Controller
     
 
 
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Delete(string id, int PatId)
     {
         HttpResponseMessage response = await _httpClient.DeleteAsync($"/api/Notes/{id}");

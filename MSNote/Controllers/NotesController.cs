@@ -25,17 +25,17 @@ namespace MSNote.Controllers
         {
             var notes = await _notesService.GetByPatIdAsync(patId);
 
-            if (notes.Count == 0)
-            {
-                // return NotFound(new { message = "Aucune note enregistrée pour ce patient" });
-                // return Content("ce patient n a pas de note");
-                Note defaultNote = new Note
-                {
-                    Notes = "Aucune note enregistrée"
-                    // Autres propriétés à initialiser si nécessaire
-                };
-                return new List<Note> { defaultNote };
-            }
+            //if (notes.Count == 0)
+            //{
+            //    // return NotFound(new { message = "Aucune note enregistrée pour ce patient" });
+            //    // return Content("ce patient n a pas de note");
+            //    Note defaultNote = new Note
+            //    {
+            //        Notes = "Aucune note enregistrée"
+            //        // Autres propriétés à initialiser si nécessaire
+            //    };
+         //       return new List<Note> { defaultNote };
+         //   }
             return notes;
         }
 

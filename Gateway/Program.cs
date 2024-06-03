@@ -22,8 +22,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = true,
+            ValidateAudience = true,
             RequireExpirationTime = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
@@ -33,6 +33,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value))
         };
     });
+
 
 // Ajouter la configuration du service IDistributedCache
 builder.Services.AddDistributedMemoryCache(); // Vous pouvez utiliser une mise en cache en mémoire pour les besoins de développement

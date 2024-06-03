@@ -4,7 +4,7 @@ namespace MSUi.Models
 {
     public class DiagnosticData
     {
-        public Notes Patient { get; set; }
+        public Patient Patient { get; set; }
         public string PatientName { get; set; }
         public string PatId { get; set; }
         public int Age { get; set; }

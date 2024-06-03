@@ -12,14 +12,17 @@ namespace MSUi.Services
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public AuthService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager, IConfiguration config)
+            RoleManager<IdentityRole> roleManager, IConfiguration config, IHttpContextAccessor contextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
+            _contextAccessor = contextAccessor;
+
         }
         public async Task<AccountStatus> RegisterAsync(Register model)
         {
@@ -119,6 +122,8 @@ namespace MSUi.Services
                 status.Token = jwtToken;
                 status.StatusCode = 1;
                 status.StatusMessage = "Logged in successfully";
+
+                _contextAccessor.HttpContext.Session.SetString("token", jwtToken);
             }
             else if (signInResult.IsLockedOut)
             {

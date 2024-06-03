@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using MSNote.Models;
 using MSNote.Services;
+using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +11,23 @@ builder.Services.Configure<BookNoteDatabaseSettings>(
 
 builder.Services.AddSingleton<NotesService>();
 
+//autho authent
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+       .AddJwtBearer(options =>
+       {
+           options.TokenValidationParameters = new TokenValidationParameters
+           {
+               ValidateIssuer = false,
+               ValidateAudience = false,
+               RequireExpirationTime = true,
+               ValidateLifetime = true,
+               ValidateIssuerSigningKey = true,
+               ValidIssuer = builder.Configuration.GetSection("JwtConfig:Issuer").Value,
+               ValidAudience = builder.Configuration.GetSection("JwtConfig:Audience").Value,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                   .GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value))
+           };
+       });
 
 
 builder.Services.AddControllers();

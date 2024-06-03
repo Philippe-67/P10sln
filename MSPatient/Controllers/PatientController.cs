@@ -15,13 +15,16 @@ namespace MSPatient.Controllers
     public class PatientController : ControllerBase
     {
         private readonly PatientDbContext _context;
+        private readonly IHttpClientFactory  _ClientFactory;
 
-        public PatientController(PatientDbContext context)
+        public PatientController(PatientDbContext context, IHttpClientFactory clientFactory)
         {
             _context = context;
+            _ClientFactory = clientFactory;
+
         }
 
-        
+        [Authorize(Roles = "organisateur,praticien")]
         [HttpGet]
         public ActionResult<IEnumerable<Patient>> GetPatients()
         {
