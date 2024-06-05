@@ -14,9 +14,10 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "authenticationOption": {
         "AuthenticationProviderKey": "Bearer",
-          "AllowedScopes": []
+        "AllowedScopes": []
       }
     },
+
     {
       "DownstreamPathTemplate": "/api/Notes/{everything}",
       "UpstreamPathTemplate": "/api/Notes/{everything}",
@@ -33,6 +34,7 @@
         "AllowedScopes": []
       }
     },
+
 
     {
       "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",

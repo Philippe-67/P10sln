@@ -1,60 +1,4 @@
-﻿@* @model IEnumerable<MSUi.Models.Patient>
-
-@{
-   
-}
-
-<a href="@Url.Action("Create", "Patient")" class="btn btn-primary">Créer un nouveau Patient</a>
-
-
-<h2>@ViewData["Title"]</h2>
-<table class="table">
-    <thead>
-        <tr>
-           
-            <th>
-                @Html.DisplayNameFor(model => model.Prenom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nom)
-            </th>
-          
-            @if (User.IsInRole("praticien"))
-            {
-            <th>
-                @Html.DisplayNameFor(model => model.RiskLevel)
-             </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null)
-        {
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Prenom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nom)
-                </td>
-           
-                if (User.IsInRole("praticien"))
-                {
-                <td>
-                    @Html.DisplayFor(modelItem => item.RiskLevel)
-                </ td> 
-                 }
-                <td>
-                        <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
-               </td>
-            </tr>
-        }
-        }
-    </tbody>
-</table> *@
-
+﻿
 @model IEnumerable<MSUi.Models.Patient>
 
 @{
@@ -99,9 +43,12 @@
                             @Html.DisplayFor(modelItem => item.RiskLevel)
                         </td>
                     }
-                    <td>
-                        <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
+                    @if (User.IsInRole("organisateur"))
+                    {
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
                     </td>
+                    }
                     @if (User.IsInRole("praticien"))
                     {
                         <td>
