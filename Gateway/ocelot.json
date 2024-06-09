@@ -28,7 +28,7 @@
           "Port": 7003
         }
       ],
-      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "UpstreamHttpMethod": [ "Get", "Delete","Post" ],
       "authenticationOption": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []

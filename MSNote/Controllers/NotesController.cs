@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MSNote.Models;
 using MSNote.Services;
+using System.Threading.Tasks;
 
 namespace MSNote.Controllers
 {
@@ -59,18 +60,16 @@ namespace MSNote.Controllers
             return CreatedAtAction(nameof(Get), new { id = newNote.Id }, newNote);
         }
 
-        [HttpDelete("{Id}")]
+       // [HttpDelete("{Id}")]
+        [HttpDelete("{Id:length(24)}")]
         public async Task<IActionResult> Delete(string Id)
         {
-            var note = await _notesService.GetAsync();
-
+            var note = await _notesService.GetByIdAsync(Id);
             if (note == null)
             {
                 return NotFound();
             }
-
             await _notesService.RemoveAsync(Id);
-
             return NoContent();
         }
 

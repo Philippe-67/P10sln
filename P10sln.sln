@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSNote", "MSNote\MSNote.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSDiagnostic", "MSDiagnostic\MSDiagnostic.csproj", "{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F89807CD-C7BF-4288-B815-83C77728D640}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7202DD3F-9CC0-49CB-8178-EAD0FBFCE3A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F89807CD-C7BF-4288-B815-83C77728D640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F89807CD-C7BF-4288-B815-83C77728D640}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F89807CD-C7BF-4288-B815-83C77728D640}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F89807CD-C7BF-4288-B815-83C77728D640}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

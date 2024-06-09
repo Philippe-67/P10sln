@@ -81,7 +81,7 @@ namespace MSUi.Controllers
              // Stockage (SetString) du jeton JWT dans la session HTTP à l'aide de IHttpContextAccessor mis en place dans le contructeur
                _contextAccessor.HttpContext.Session.SetString("token", jwtToken);
 
-                return RedirectToAction("Index", "Home", new { token = jwtToken });
+                return RedirectToAction("Index", "Patient", new { token = jwtToken });
             }
             else
             {
