@@ -1,0 +1,24 @@
+main()
+{
+	int cpt=5;
+	Ajoute10(ref cpt);
+	Console.writeline(cpt);
+}
+Ajoute10(ref int cpt)
+{
+	cpt+=10;
+	Console.WL(cpt);
+}
+
+
+main()
+{
+	Personne p = new Personne(age:10, prenom:philippe);
+	Ajoute10(p);
+	CWL(p.age);
+}
+Ajoute10(Personne perso)
+{
+	perso.age+=10;
+	CWL(perso.age);
+}
