@@ -1,13 +1,25 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using MSNote.Models;
 using MSNote.Services;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//// Add services to the container.
+//builder.Services.Configure<BookNoteDatabaseSettings>(
+//    builder.Configuration.GetSection("BookNoteDatabase"));
+
+//builder.Services.AddSingleton<NotesService>();
+
 builder.Services.Configure<BookNoteDatabaseSettings>(
     builder.Configuration.GetSection("BookNoteDatabase"));
+
+builder.Services.AddSingleton<IMongoClient>(sp => {
+    var settings = sp.GetRequiredService<IOptions<BookNoteDatabaseSettings>>().Value;
+    return new MongoClient(settings.ConnectionString);
+});
 
 builder.Services.AddSingleton<NotesService>();
 

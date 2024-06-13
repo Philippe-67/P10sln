@@ -8,8 +8,6 @@ using System.Net.Http.Headers;
 using System.Text;
 namespace MSUi.Controllers
 {
-
-
     public class PatientController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -26,22 +24,23 @@ namespace MSUi.Controllers
         {
 
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://Localhost:7001");
+            _httpClient.BaseAddress = new Uri("http://gateway:80");
             _userManager = userManager;
             _signInManager = signInManager;
             _contextAccessor = contextAccessor;
             _logger = logger;
 
         }
-        [Authorize(Roles = "organisateur,praticien")]
+       // [Authorize(Roles = "organisateur,praticien")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             // Récupération du jeton JWT de la session HTTP stocké dans la méthode Login de AuthenticationController.cs
-           var token = _contextAccessor.HttpContext.Session.GetString("token");
+            ////////////////////////
+           //var token = _contextAccessor.HttpContext.Session.GetString("token");
 
-            // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+           // // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
+           // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             HttpResponseMessage response = await _httpClient.GetAsync("/api/Patient");
             if (response.IsSuccessStatusCode)
@@ -74,7 +73,7 @@ namespace MSUi.Controllers
                 return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
             }
         }
-        [Authorize(Roles = "organisateur")]
+      //  [Authorize(Roles = "organisateur")]
         [HttpGet]
         public async Task<IActionResult> detail(int id)
         {
@@ -162,7 +161,7 @@ namespace MSUi.Controllers
             }
         }
 
-        [Authorize(Roles = "organisateur")]
+       // [Authorize(Roles = "organisateur")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -192,7 +191,7 @@ namespace MSUi.Controllers
         }
 
 
-        [Authorize(Roles = "organisateur")]
+      //  [Authorize(Roles = "organisateur")]
         [HttpGet]
         public async Task<IActionResult> Delete( int id)
         {

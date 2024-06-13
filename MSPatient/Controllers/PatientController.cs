@@ -24,7 +24,7 @@ namespace MSPatient.Controllers
 
         }
 
-        [Authorize(Roles = "organisateur,praticien")]
+        //[Authorize(Roles = "organisateur,praticien")]
         [HttpGet]
         public ActionResult<IEnumerable<Patient>> GetPatients()
         {

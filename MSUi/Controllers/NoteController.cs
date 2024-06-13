@@ -13,7 +13,7 @@ public class NoteController : Controller
     {
 
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("https://Localhost:7001");
+        _httpClient.BaseAddress = new Uri("http://gateway:80");
 
     }
    // [HttpGet("Note/{patId}")]

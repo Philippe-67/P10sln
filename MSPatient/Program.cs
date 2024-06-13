@@ -6,8 +6,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.AddDbContext<PatientDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var server = Environment.GetEnvironmentVariable("DatabaseServer");
+var port = Environment.GetEnvironmentVariable("DatabasePort");
+var user = Environment.GetEnvironmentVariable("DatabaseUser");
+var password = Environment.GetEnvironmentVariable("DatabasePassword");
+var database = Environment.GetEnvironmentVariable("DatabaseName");
+
+var connectionString = $"Server={server}, {port}; Initial Catalog = {database}; User ID = {user}; password ={password}; TrustServerCertificate=True";
+
 builder.Services.AddDbContext<PatientDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+   options.UseSqlServer(connectionString));
 
 
 builder.Services.AddHttpClient();

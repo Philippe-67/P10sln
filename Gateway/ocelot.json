@@ -4,62 +4,62 @@
     {
       "DownstreamPathTemplate": "/api/Patient/{everything}",
       "UpstreamPathTemplate": "/api/Patient/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7002
+          "Host": "mspatient",
+          "Port": 80
         }
       ],
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "authenticationOption": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
+      //"authenticationOption": {
+      //  "AuthenticationProviderKey": "Bearer",
+      //  "AllowedScopes": []
+      //}
     },
 
     {
       "DownstreamPathTemplate": "/api/Notes/{everything}",
       "UpstreamPathTemplate": "/api/Notes/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7003
+          "Host": "msnote",
+          "Port": 80
         }
       ],
       "UpstreamHttpMethod": [ "Get", "Delete","Post" ],
-      "authenticationOption": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
+      //"authenticationOption": {
+      //  "AuthenticationProviderKey": "Bearer",
+      //  "AllowedScopes": []
+      //}
     },
 
 
     {
       "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
       "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7005
+          "Host": "msdiagnostic",
+          "Port": 80
         }
       ],
       "UpstreamHttpMethod": [ "Get" ],
-      "authenticationOption": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
+      //"authenticationOption": {
+      //  "AuthenticationProviderKey": "Bearer",
+      //  "AllowedScopes": []
+      //}
     },
     {
       "DownstreamPathTemplate": "/api/Diagnostic/patientDiagnostic/{patientId}",
       "UpstreamPathTemplate": "/api/Diagnostic/patientDiagnostic/{patientId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7005
+          "Host": "msdiagnostic",
+          "Port": 80
         }
       ],
       "UpstreamHttpMethod": [ "Get" ]
@@ -74,6 +74,82 @@
   }
 }
 
+
+//{
+//  "Routes": [
+
+//    {
+//      "DownstreamPathTemplate": "/api/Patient/{everything}",
+//      "UpstreamPathTemplate": "/api/Patient/{everything}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 7002
+//        }
+//      ],
+//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+//      "authenticationOption": {
+//        "AuthenticationProviderKey": "Bearer",
+//        "AllowedScopes": []
+//      }
+//    },
+
+//    {
+//      "DownstreamPathTemplate": "/api/Notes/{everything}",
+//      "UpstreamPathTemplate": "/api/Notes/{everything}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 7003
+//        }
+//      ],
+//      "UpstreamHttpMethod": [ "Get", "Delete", "Post" ],
+//      "authenticationOption": {
+//        "AuthenticationProviderKey": "Bearer",
+//        "AllowedScopes": []
+//      }
+//    },
+
+
+//    {
+//      "DownstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
+//      "UpstreamPathTemplate": "/api/Diagnostic/patientsWithDiabetesRisk/{everything}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 7005
+//        }
+//      ],
+//      "UpstreamHttpMethod": [ "Get" ],
+//      "authenticationOption": {
+//        "AuthenticationProviderKey": "Bearer",
+//        "AllowedScopes": []
+//      }
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/Diagnostic/patientDiagnostic/{patientId}",
+//      "UpstreamPathTemplate": "/api/Diagnostic/patientDiagnostic/{patientId}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 7005
+//        }
+//      ],
+//      "UpstreamHttpMethod": [ "Get" ]
+//      //"authenticationOption": {
+//      //  "AuthenticationProviderKey": "Bearer",
+//      //  "AllowedScopes": []
+//      //},
+//    }
+//  ],
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7001"
+//  }
+//}
 
 
 

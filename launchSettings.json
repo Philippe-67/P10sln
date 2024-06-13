@@ -4,11 +4,7 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "mspatient": "StartDebugging",
-        "msnote": "StartDebugging",
-        "msdiagnostic": "StartDebugging",
-        "gateway": "StartDebugging",
-        "msui": "StartDebugging"
+        "webapplication1": "StartDebugging"
       }
     }
   }
