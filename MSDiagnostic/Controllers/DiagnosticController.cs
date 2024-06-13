@@ -17,9 +17,9 @@ namespace MSDiagnosticService.Controllers
         public DiagnosticController(HttpClient httpClient)
         {
             _patientClient = httpClient;
-            _patientClient.BaseAddress = new Uri("https://Localhost:7001");
+            _patientClient.BaseAddress = new Uri("http://gateway:80");
             _noteClient = httpClient;
-            _noteClient.BaseAddress = new Uri("https://Localhost:7001");
+            _noteClient.BaseAddress = new Uri("http://gateway:80");
         }
 
         [HttpGet("patientsWithDiabetesRisk")]
