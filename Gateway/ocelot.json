@@ -11,7 +11,7 @@
           "Port": 80
         }
       ],
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]//,
       //"authenticationOption": {
       //  "AuthenticationProviderKey": "Bearer",
       //  "AllowedScopes": []
@@ -28,7 +28,7 @@
           "Port": 80
         }
       ],
-      "UpstreamHttpMethod": [ "Get", "Delete","Post" ],
+      "UpstreamHttpMethod": [ "Get", "Delete","Post" ]//,
       //"authenticationOption": {
       //  "AuthenticationProviderKey": "Bearer",
       //  "AllowedScopes": []
@@ -70,7 +70,9 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7001"
+    //"BaseUrl": "https://localhost:7001
+    "BaseUrl": "http://gateway:80"
+
   }
 }
 

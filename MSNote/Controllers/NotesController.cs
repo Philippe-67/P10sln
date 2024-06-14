@@ -12,11 +12,15 @@ namespace MSNote.Controllers
     public class NotesController : ControllerBase
     {
         private readonly NotesService _notesService;
+      //  private readonly IHttpClientFactory _ClientFactory;
 
-        public NotesController(NotesService notesService) =>
-       _notesService = notesService;
+        public NotesController(NotesService notesService)//, IHttpClientFactory clientFactory)
+        {
+            _notesService = notesService;
+         //   _ClientFactory = clientFactory;
+        }
 
-        [HttpGet]
+            [HttpGet]
         public async Task<List<Note>> Get() =>
             await _notesService.GetAsync();
 

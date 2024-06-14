@@ -8,6 +8,10 @@ using MSUi.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+//--> ajoute le client HTTP dans le conteneur d'injection de dépendances, ce qui permet à l' application de faire des requêtes HTTP.
+builder.Services.AddHttpClient();
+
+
 
 // Add database connection sans docker
 ////var connectionString = builder.Configuration.GetConnectionString("UserConnection");
@@ -71,9 +75,6 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
 
-
-//--> ajoute le client HTTP dans le conteneur d'injection de dépendances, ce qui permet à l' application de faire des requêtes HTTP.
-builder.Services.AddHttpClient();
 
 
 
