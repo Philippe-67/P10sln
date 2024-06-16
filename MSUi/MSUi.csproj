@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Migration\" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

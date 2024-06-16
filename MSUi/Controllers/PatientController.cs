@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MSUi.Models;
 using Newtonsoft.Json;
+using NuGet.Common;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 namespace MSUi.Controllers
 {
     public class PatientController : Controller
@@ -31,16 +33,21 @@ namespace MSUi.Controllers
             _logger = logger;
 
         }
-       // [Authorize(Roles = "organisateur,praticien")]
+        [Authorize(Roles = "organisateur,praticien")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             // Récupération du jeton JWT de la session HTTP stocké dans la méthode Login de AuthenticationController.cs
             ////////////////////////
-           //var token = _contextAccessor.HttpContext.Session.GetString("token");
+            // var token = _contextAccessor.HttpContext.Session.GetString("token");
+            var token = Request.Cookies["jwtToken"];
+            // // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Token is missing");
+            }
 
-           // // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
-           // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             HttpResponseMessage response = await _httpClient.GetAsync("/api/Patient");
             if (response.IsSuccessStatusCode)
@@ -73,15 +80,22 @@ namespace MSUi.Controllers
                 return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
             }
         }
-      //  [Authorize(Roles = "organisateur")]
+        [Authorize(Roles = "organisateur")]
         [HttpGet]
         public async Task<IActionResult> detail(int id)
         {
             // Récupération du jeton JWT de la session HTTP stocké dans la méthode Login de AuthenticationController.cs
-            var token = _contextAccessor.HttpContext.Session.GetString("token");
-
-            // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
+            // var token = _contextAccessor.HttpContext.Session.GetString("token");
+            var token = Request.Cookies["jwtToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Token is missing");
+            }
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(id), Encoding.UTF8, "application/json");
+            // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
+           _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             HttpResponseMessage response = await _httpClient.GetAsync($"/api/Patient/{id}");
             if (response.IsSuccessStatusCode)
@@ -161,7 +175,7 @@ namespace MSUi.Controllers
             }
         }
 
-       // [Authorize(Roles = "organisateur")]
+        [Authorize(Roles = "organisateur")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -191,7 +205,7 @@ namespace MSUi.Controllers
         }
 
 
-      //  [Authorize(Roles = "organisateur")]
+       [Authorize(Roles = "organisateur")]
         [HttpGet]
         public async Task<IActionResult> Delete( int id)
         {

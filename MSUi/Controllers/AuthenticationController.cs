@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MSUi.Models.Authentification;
 using MSUi.Services;
@@ -71,8 +72,8 @@ namespace MSUi.Controllers
 
             var result = await _authService.LoginAsync(model);
 
-            var jwtToken = result.Token;
-
+             var jwtToken = result.Token;
+            Response.Cookies.Append("jwtToken", jwtToken);
 
             if (result.StatusCode == 1 && jwtToken != string.Empty)
             {

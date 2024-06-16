@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace MSDiagnosticService.Controllers
 {
-   // [Authorize(Roles = "organisateur")]
     [Route("api/[controller]")]
     [ApiController]
     public class DiagnosticController : ControllerBase
