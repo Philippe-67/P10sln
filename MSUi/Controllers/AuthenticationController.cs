@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MSUi.Models.Authentification;
 using MSUi.Services;
-using Serilog;
-using System;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 
 namespace MSUi.Controllers
@@ -80,7 +77,7 @@ namespace MSUi.Controllers
                 // log messages de débogage
                 _logger.LogInformation($"Utilisateur  authentifié avec succès : {model.Email}");
              // Stockage (SetString) du jeton JWT dans la session HTTP à l'aide de IHttpContextAccessor mis en place dans le contructeur
-               _contextAccessor.HttpContext.Session.SetString("token", jwtToken);
+             //  _contextAccessor.HttpContext.Session.SetString("token", jwtToken);
 
                 return RedirectToAction("Index", "Patient", new { token = jwtToken });
             }
@@ -98,7 +95,9 @@ namespace MSUi.Controllers
         {
             await _authService.LogoutAsync();
 
-            return RedirectToAction(nameof(Login));
+            // return RedirectToAction(nameof(Login));
+            // return RedirectToAction("Index", "Home");
+            return View();
         }
     }
 }

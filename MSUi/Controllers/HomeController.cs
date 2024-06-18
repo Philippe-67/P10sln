@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace MSUi.Controllers
 {
-    public class HomeController : Controller
+    public class Home : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<Home> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public Home(ILogger<Home> logger)
         {
             _logger = logger;
         }

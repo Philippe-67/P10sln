@@ -1,13 +1,14 @@
-﻿
+﻿@* @* 
 @model IEnumerable<MSUi.Models.Patient>
 
 @{
     ViewData["Title"] = "Liste des Patients";
     
 }
-
-<a href="@Url.Action("Create", "Patient")" class="btn btn-primary">Créer un nouveau Patient</a>
-
+@if (User.IsInRole("organisateur"))
+{
+    <a href="@Url.Action("Create", "Patient")" class="btn btn-primary">Créer un nouveau Patient</a>
+}
 <br>
 <br>
 
@@ -25,7 +26,7 @@
             </th>
             @if (User.IsInRole("praticien"))
             {
-                <th>
+                <th class="orange">
                     @Html.DisplayNameFor(model => model.First().RiskLevel)
                 </th>
             }
@@ -43,9 +44,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Nom)
                     </td>
-                    @if (User.IsInRole("praticien"))
+                   @if (User.IsInRole("praticien"))
                     {
-                        <td>
+                        <td >
                             @Html.DisplayFor(modelItem => item.RiskLevel)
                         </td>
                     }
@@ -58,12 +59,106 @@
                     @if (User.IsInRole("praticien"))
                     {
                         <td>
-                           @* <a asp-action="Note" asp-route-id="@item.Id">Notes patients</a>*@
-                            <a href="@Url.Action("Index", "Note", new { patId=item.Id})">Lien vers les notes du patient</a>
-                    </td>
+                            
+                            <a href="@Url.Action("Index", "Note", new { patId=item.Id})">accès aux notes du patient</a>
+                            @* <a asp-action="Create" asp-route-id="@item.Id" asp-route-patId="@item.PatId">Créer une note</a>                         </td>
                     }
                 </tr>
             }
         }
     </tbody>
-</table>
+</table> *@ 
+@model IEnumerable<MSUi.Models.Patient>
+
+@{
+    ViewData["Title"] = "Liste des Patients";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Partie haute : Liste des patients -->
+<div style="width: 100%; height: 50%; overflow: auto;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Prénom
+                </th>
+                <th>
+                    Nom
+                </th>
+                @if (User.IsInRole("praticien"))
+                {
+                    <th class="orange">
+                        Risque
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var patient in Model)
+                {
+                    <tr>
+                        <td>
+                            @patient.Prenom
+                        </td>
+                        <td>
+                            @patient.Nom
+                        </td>
+                        @if (User.IsInRole("praticien"))
+                        {
+                            <td style="color: orange;">
+                                @patient.RiskLevel
+                            </td>
+                        }
+                        <td>
+                            <form asp-controller="Note" asp-action="GetPatientNotes" method="post">
+                                <input type="hidden" name="patId" value="@patient.Id" />
+                                <input type="submit" value="Voir les notes" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Partie basse : Notes du patient sélectionné -->
+@if (ViewBag.Notes != null)
+{
+    <div style="width: 100%; height: 50%; overflow: auto;">
+        <h2>Notes du patient</h2>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Patient
+                    </th>
+                    <th>
+                        Notes
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var note in ViewBag.Notes)
+                {
+                    <tr>
+                        <td>
+                            @note.Patient
+                        </td>
+                        <td>
+                            @note.Notes
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<a href="@Url.Action("Index", "Patient")" class="btn btn-primary">Retourner à la vue patient</a>

@@ -28,16 +28,34 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patients</a>
                         </li>
-                        <li class="nav-item">
+                       @*  <li class="nav-item">
                             <a class="" asp-area="" asp-controller="Authentication" asp-action="Login">login</a>
-                        </li>
-                        <li class="nav-item">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li><a asp-controller="Authentication" asp-action="Logout">Déconnexion</a></li>
-                        }
-                        </li>
+                        </li> *@
                     </ul>
+                    <style>
+                    .decalage-droit {
+                    margin-right: 100px; /* ou toute autre valeur de décalage souhaitée */
+                    }
+                    </style>
+                       
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                <a class="nav-link disabled decalage-droit" href="#" tabindex="-1" aria-disabled="false">Bonjour @User.Identity.Name</a>
+                                    </li>
+                                </ul>
+                            }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item">
+                        <a class="" asp-area="" asp-controller="Authentication" asp-action="Login">déconnexion</a>
+                                             
+                        </ul>
+                    }
+                       
+                   
                 </div>
                 
             </div>

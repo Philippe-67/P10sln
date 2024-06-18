@@ -1,89 +1,4 @@
-﻿@* @model IEnumerable<MSUi.Models.Patient>
-
-@{
-   
-}
-<a asp-action="Create">Créer un nouveau patient</a>
-
-<h2>@ViewData["Title"]</h2>
-<table class="table">
-    <thead>
-        <tr>
-             <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th> 
-            <th>
-                @Html.DisplayNameFor(model => model.Prenom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateDeNaissance)
-            </th>
-         
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adresse)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tel)
-            </th>
-            @*  <th>
-                @Html.DisplayNameFor(model => model.RiskLevel)
-             </th>  *
-            
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null)
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Prenom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateDeNaissance)
-                </td>
-                   
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adresse)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RiskLevel)
-                < td> 
-
-                <td>
-                    <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
-
-                  <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                    <a asp-action="Update" asp-route-id="@item.Id">Modifier</a>
-                    
-                    
-                    <a asp-controller="Note" asp-action="Index" asp-route-patId="@item.Id">Voir les notes</a>
-                        <a asp-controller="Diagnostic" asp-action="Index" asp-route-patId="@item.Id">Risques</a>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="Index">Notes</a>
-                 </td>
-            </tr>
-        }
-    </tbody>
-</table> *@
-@model Patient // Assurez-vous d'importer le bon modèle de patient
+﻿@model Patient // Assurez-vous d'importer le bon modèle de patient
 
 <h2>Détails du patient</h2>
 <div>
@@ -100,5 +15,5 @@
 @* <a asp-controller="MSNote" asp-action="Create" asp-route-id="@Model.Id">Créer une note</a>
  *@
 <a asp-action="Update" asp-route-id="@Model.Id">Mettre à jour les informations du patient</a>
-<a asp-action="Delete" asp-route-id="@Model.Id">Supprimer ce patient</a>
-
+@* <a asp-action="Delete" asp-route-id="@Model.Id">Supprimer ce patient</a>
+ *@

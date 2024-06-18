@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MSUi.Helpers;
 using MSUi.Models;
 using Newtonsoft.Json;
-using NuGet.Common;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 namespace MSUi.Controllers
 {
     public class PatientController : Controller
@@ -17,8 +16,8 @@ namespace MSUi.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ILogger<PatientController> _logger;
-        
-        public PatientController(HttpClient httpClient, 
+
+        public PatientController(HttpClient httpClient,
         UserManager<IdentityUser> userManager,
         SignInManager<IdentityUser> signInManager,
         IHttpContextAccessor contextAccessor,
@@ -26,7 +25,9 @@ namespace MSUi.Controllers
         {
 
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("http://gateway:80");
+            //  _httpClient.BaseAddress = new Uri("http://gateway:80");
+            _httpClient.BaseAddress = new Uri(UriHelpers.GATEWAY_URI);
+
             _userManager = userManager;
             _signInManager = signInManager;
             _contextAccessor = contextAccessor;
@@ -54,7 +55,7 @@ namespace MSUi.Controllers
             {
                 string responseData = await response.Content.ReadAsStringAsync();
                 var patients = JsonConvert.DeserializeObject<List<Patient>>(responseData);
-                
+
                 if (User.IsInRole("praticien"))
 
                     foreach (var patient in patients)
@@ -84,42 +85,23 @@ namespace MSUi.Controllers
         [HttpGet]
         public async Task<IActionResult> detail(int id)
         {
-            // Récupération du jeton JWT de la session HTTP stocké dans la méthode Login de AuthenticationController.cs
-            // var token = _contextAccessor.HttpContext.Session.GetString("token");
+            
             var token = Request.Cookies["jwtToken"];
             if (string.IsNullOrEmpty(token))
             {
                 return BadRequest("Token is missing");
             }
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+           
 
             var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(id), Encoding.UTF8, "application/json");
-            // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
-           _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+           
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             HttpResponseMessage response = await _httpClient.GetAsync($"/api/Patient/{id}");
             if (response.IsSuccessStatusCode)
             {
                 string responseData = await response.Content.ReadAsStringAsync();
                 var patient = JsonConvert.DeserializeObject<Patient>(responseData);
-
-
-                //foreach (var patient in patients)
-                //{
-                //    HttpResponseMessage responseDiagnostic = await _httpClient.GetAsync($"api/Diagnostic/patientDiagnostic/{patient.Id}");
-                //    if (responseDiagnostic.IsSuccessStatusCode)
-                //    {
-                //        string diagnosticData = await responseDiagnostic.Content.ReadAsStringAsync();
-                //        var diagnostic = JsonConvert.DeserializeObject<DiagnosticData>(diagnosticData);
-                //        patient.RiskLevel = diagnostic.RiskLevel;
-                //    }
-                //    else
-                //    {
-
-                //        patient.RiskLevel = "Non disponible";
-                //    }
-              //  }
-
                 return View(patient);
             }
             else
@@ -132,7 +114,6 @@ namespace MSUi.Controllers
         {
             // Récupérer les données du patient depuis l'API ou la source de données appropriée
             HttpResponseMessage response = await _httpClient.GetAsync($"/api/Patient/{id}");
-
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -142,12 +123,12 @@ namespace MSUi.Controllers
             }
             else
             {
-                return NotFound(); // Gérer le cas où le patient n'existe pas
+                return NotFound();
             }
         }
 
-        // [HttpPost] pour traiter la soumission du formulaire avec les modifications du patient
-      
+
+
         [HttpPost] //avant j'avais [HttpPut) mais les modf n'étaient pas enregistrées
         public async Task<IActionResult> Update(int id, Patient patient)
         {
@@ -205,16 +186,16 @@ namespace MSUi.Controllers
         }
 
 
-       [Authorize(Roles = "organisateur")]
+        [Authorize(Roles = "organisateur")]
         [HttpGet]
-        public async Task<IActionResult> Delete( int id)
+        public async Task<IActionResult> Delete(int id)
         {
             HttpResponseMessage response = await _httpClient.DeleteAsync($"/api/Patient/{id}");
 
             if (response.IsSuccessStatusCode)
             {
-                 return RedirectToAction("Index");
-              
+                return RedirectToAction("Index");
+
 
             }
             else if (response.StatusCode == HttpStatusCode.NotFound)
@@ -223,9 +204,7 @@ namespace MSUi.Controllers
             }
             else
             {
-                //string errorMessage = await response.Content.ReadAsStringAsync();
                 return View("Error");
-                //return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}. Détails : {errorMessage}");
             }
         }
     }

@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MSUi.Helpers;
 using MSUi.Models;
 using Newtonsoft.Json;
+using NuGet.Common;
 using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Text;
 
 public class NoteController : Controller
@@ -13,37 +18,55 @@ public class NoteController : Controller
     {
 
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("http://gateway:80");
+        _httpClient.BaseAddress = new Uri(UriHelpers.GATEWAY_URI);
+    //    _httpClient.BaseAddress = new Uri("http://gateway:80");
 
     }
-   // [HttpGet("Note/{patId}")]
+    public ActionResult VotreAction()
+    {
+        // Votre logique métier ici
+
+        return View("Deux");
+    }
+    [Authorize(Roles = "praticien")]
+    // [HttpGet("Note/{patId}")]
     [HttpGet]
     public async Task<IActionResult> Index(int patId)
     {
-        HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{patId}");
-        if (response.IsSuccessStatusCode)
+        var token = Request.Cookies["jwtToken"];
+        if (string.IsNullOrEmpty(token))
         {
-            string responseData = await response.Content.ReadAsStringAsync();
-            try
+            return BadRequest("Token is missing");
+        }
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(patId), Encoding.UTF8, "application/json");
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{patId}");
+            if (response.IsSuccessStatusCode)
             {
-                var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
-                if (notes.Any())
+                string responseData = await response.Content.ReadAsStringAsync();
+                try
                 {
-                    return View(notes);
+                    var notes = JsonConvert.DeserializeObject<List<Note>>(responseData);
+                    if (notes.Any())
+                    {
+                        return View(notes);
+                    }
+                    else
+                    {
+                        return Content("Ce patient n'a pas de note");
+                    }
                 }
-                else
+                catch (JsonSerializationException)
                 {
-                    return Content("Ce patient n'a pas de note");
+                    return Content("Une erreur s'est produite lors de la désérialisation des données");
                 }
             }
-            catch (JsonSerializationException)
+            else
             {
-                return Content("Une erreur s'est produite lors de la désérialisation des données");
-           }
-        }
-        else
-        {
-            return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
+                return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
+            }
         }
     }
 
