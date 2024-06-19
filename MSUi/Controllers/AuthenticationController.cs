@@ -69,18 +69,26 @@ namespace MSUi.Controllers
 
             var result = await _authService.LoginAsync(model);
 
-             var jwtToken = result.Token;
-            Response.Cookies.Append("jwtToken", jwtToken);
+            //    var jwtToken = result.Token;
+            //   Response.Cookies.Append("jwtToken", jwtToken);
 
-            if (result.StatusCode == 1 && jwtToken != string.Empty)
+            //   if (result.StatusCode == 1 && jwtToken != string.Empty)
+            if (result.StatusCode == 1 && !string.IsNullOrEmpty(result.Token))
             {
                 // log messages de débogage
                 _logger.LogInformation($"Utilisateur  authentifié avec succès : {model.Email}");
-             // Stockage (SetString) du jeton JWT dans la session HTTP à l'aide de IHttpContextAccessor mis en place dans le contructeur
-             //  _contextAccessor.HttpContext.Session.SetString("token", jwtToken);
+              
+                var cookieOptions = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(15), // Le token expire après 15 minutes.
+                };
 
-                return RedirectToAction("Index", "Patient", new { token = jwtToken });
+                Response.Cookies.Append("jwtToken", result.Token, cookieOptions);
+
+               
+                return RedirectToAction("Index", "Patient");
             }
+        
             else
             {
                 TempData["msg"] = result.StatusMessage;

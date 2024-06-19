@@ -1,19 +1,18 @@
-﻿@model Patient // Assurez-vous d'importer le bon modèle de patient
+﻿@model Patient 
 
 <h2>Détails du patient</h2>
 <div>
-    <p>ID : @Model.Id</p>
+  @*   <p>ID : @Model.Id</p> *@
     <p>Nom : @Model.Nom</p>
     <p>Prénom : @Model.Prenom</p>
     <p>Genre : @Model.Genre</p>
     <p>Date de naissance : @Model.DateDeNaissance</p>
     <p>Adresse : @Model.Adresse</p>
     <p>Téléphone : @Model.Tel</p>
-    <!-- Ajoutez d'autres champs selon vos besoins -->
 </div>
 <a href="@Url.Action("Index", "Patient")" class="btn btn-primary">Retourner à la vue patient</a>
 @* <a asp-controller="MSNote" asp-action="Create" asp-route-id="@Model.Id">Créer une note</a>
  *@
 <a asp-action="Update" asp-route-id="@Model.Id">Mettre à jour les informations du patient</a>
-@* <a asp-action="Delete" asp-route-id="@Model.Id">Supprimer ce patient</a>
- *@
+ <a asp-action="Delete" asp-route-id="@Model.Id">Supprimer ce patient</a>
+ 

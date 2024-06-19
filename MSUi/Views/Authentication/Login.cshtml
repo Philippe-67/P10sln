@@ -1,10 +1,13 @@
 ﻿@model MSUi.Models.Authentification.Login
 @{
     Layout = null;
-    ViewData["Title"] = "Connexion";
+    ViewData["Title"] = "Bienvenue, merci de vous identifier:";
 }
-@* <h1>@ViewData["Title"]</h1>
- *@
+<br />
+<br/>
+<br />
+<br />
+@* <h2 style="color:aqua; text-align: center;">@ViewData["Title"]</h2> *@
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +19,7 @@
 </head>
 <body>
     <form asp-action="Login" method="post">
+        <h2 style="color:grey; text-align: center;">@ViewData["Title"]</h2>
         <div class="container">
             <img src="~/img/logo2.jpeg" />
         </div>
