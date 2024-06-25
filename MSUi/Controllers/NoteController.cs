@@ -24,12 +24,12 @@ public class NoteController : Controller
     }
     public ActionResult VotreAction()
     {
-        // Votre logique métier ici
+        
 
         return View("Deux");
     }
     [Authorize(Roles = "praticien")]
-    // [HttpGet("Note/{patId}")]
+    
     [HttpGet]
     public async Task<IActionResult> Index(int patId)
     {
@@ -70,7 +70,7 @@ public class NoteController : Controller
         }
     }
 
-    
+    [Authorize(Roles = "praticien")]
     [HttpGet]
     public async Task<IActionResult> Delete(string id, int PatId)
     {
@@ -113,28 +113,7 @@ public class NoteController : Controller
             return View("Error");
         }
     }
-    //    [HttpGet]
-    //   // public async Task<IActionResult> Update(int id)
-    //    public async Task<IActionResult> Update(string Id, [FromBody] List<Note> updatedNotes)
-
-    //{
-    //    // Récupérer les données du patient depuis l'API ou la source de données appropriée
-    //    HttpResponseMessage response = await _httpClient.GetAsync($"/api/Notes/{Id}");
-
-    //        if (response.IsSuccessStatusCode)
-    //        {
-    //            var json = await response.Content.ReadAsStringAsync();
-    //            var note = JsonConvert.DeserializeObject<Notes>(json);
-
-    //            return View(note); // Retourner la vue avec les données du patient pour modification
-    //        }
-    //        else
-    //        {
-    //            return NotFound(); // Gérer le cas où le patient n'existe pas
-    //        }
-    //    }
-
-    //}
+   
 }
 
 

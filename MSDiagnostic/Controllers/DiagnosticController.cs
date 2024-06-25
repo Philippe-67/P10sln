@@ -74,7 +74,7 @@ namespace MSDiagnosticService.Controllers
 
                 var riskLevel = DetermineDiabetesRiskLevel(new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers });
 
-               // var diagnosticData = new DiagnosticData { Patient = patient, Notes = (List<Note>)notes, Age = age, TriggerCount = triggerCount, FoundTriggers = foundTriggers, RiskLevel = riskLevel };
+            
                 var diagnosticData = new DiagnosticData {   RiskLevel = riskLevel };
 
                 return Ok(diagnosticData);

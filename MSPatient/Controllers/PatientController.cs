@@ -24,7 +24,7 @@ namespace MSPatient.Controllers
 
         }
 
-        //[Authorize(Roles = "organisateur,praticien")]
+        [Authorize(Roles = "organisateur,praticien")]
         [HttpGet]
         public ActionResult<IEnumerable<Patient>> GetPatients()
         {
@@ -32,6 +32,7 @@ namespace MSPatient.Controllers
             return Ok(patients);
         }
 
+       [Authorize(Roles = "organisateur, praticien")]
         [HttpGet("{id}")]
         public ActionResult<Patient> GetPatient(int id)
         {
@@ -55,8 +56,8 @@ namespace MSPatient.Controllers
         }
 
 
-       
-        [HttpPut("{id}")]
+        [Authorize(Roles = "organisateur")]
+         [HttpPut("{id}")]
         public IActionResult UpdatePatient(int id, Patient patient)
         {
             if (id != patient.Id)
@@ -68,18 +69,7 @@ namespace MSPatient.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("{id}")]
-        //public IActionResult DeletePatient(int id)
-        //{
-        //    var patient = _context.Patients.Find(id);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _context.Patients.Remove(patient);
-        //    _context.SaveChanges(); 
-        //    return NoContent();
-        //}
+       
         [HttpDelete("{id}")]
        
         public async Task<IActionResult> DeletePatient(int id)

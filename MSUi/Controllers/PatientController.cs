@@ -112,6 +112,13 @@ namespace MSUi.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
+            var token = Request.Cookies["jwtToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Token is missing");
+            }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             // Récupérer les données du patient depuis l'API ou la source de données appropriée
             HttpResponseMessage response = await _httpClient.GetAsync($"/api/Patient/{id}");
             if (response.IsSuccessStatusCode)
@@ -132,6 +139,12 @@ namespace MSUi.Controllers
         [HttpPost] //avant j'avais [HttpPut) mais les modf n'étaient pas enregistrées
         public async Task<IActionResult> Update(int id, Patient patient)
         {
+            var token = Request.Cookies["jwtToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Token is missing");
+            }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             if (!ModelState.IsValid)
             {
                 return View(patient); // Retourner la vue avec les erreurs de validation
@@ -165,6 +178,12 @@ namespace MSUi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Patient patient)
         {
+            var token = Request.Cookies["jwtToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Token is missing");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(patient); // Retourne la vue avec les erreurs de validation
