@@ -35,7 +35,7 @@ namespace MSUi.Controllers
 
         }
      
-       [Authorize(Roles = "organisateur,praticien")]
+    //   [Authorize(Roles = "organisateur,praticien")]
      
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -91,7 +91,7 @@ namespace MSUi.Controllers
                 return StatusCode((int)response.StatusCode, $"Erreur HTTP: {response.StatusCode}");
             }
         }
-        [Authorize(Roles = "organisateur")]
+      //  [Authorize(Roles = "organisateur")]
         [HttpGet]
         public async Task<IActionResult> detail(int id)
         {
@@ -179,12 +179,14 @@ namespace MSUi.Controllers
             }
         }
 
-        [Authorize(Roles = "organisateur")]
+    //   [Authorize(Roles = "organisateur")]//ok
         [HttpGet]
         public IActionResult Create()
+
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(Patient patient)
         {
@@ -193,6 +195,7 @@ namespace MSUi.Controllers
             {
                 return BadRequest("Token is missing");
             }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             if (!ModelState.IsValid)
             {
@@ -215,7 +218,7 @@ namespace MSUi.Controllers
         }
 
 
-        [Authorize(Roles = "organisateur")]
+       // [Authorize(Roles = "organisateur")]//ok
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -224,7 +227,6 @@ namespace MSUi.Controllers
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
-
 
             }
             else if (response.StatusCode == HttpStatusCode.NotFound)

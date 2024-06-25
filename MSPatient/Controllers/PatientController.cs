@@ -15,16 +15,16 @@ namespace MSPatient.Controllers
     public class PatientController : ControllerBase
     {
         private readonly PatientDbContext _context;
-       // private readonly IHttpClientFactory  _ClientFactory;
+       
 
-        public PatientController(PatientDbContext context)//, IHttpClientFactory clientFactory)
+        public PatientController(PatientDbContext context)
         {
             _context = context;
-          //  _ClientFactory = clientFactory;
+         
 
         }
 
-        [Authorize(Roles = "organisateur,praticien")]
+        [Authorize(Roles = "organisateur,praticien")] //
         [HttpGet]
         public ActionResult<IEnumerable<Patient>> GetPatients()
         {
@@ -32,7 +32,7 @@ namespace MSPatient.Controllers
             return Ok(patients);
         }
 
-       [Authorize(Roles = "organisateur, praticien")]
+   //    [Authorize(Roles = "organisateur, praticien")] // ciqsp
         [HttpGet("{id}")]
         public ActionResult<Patient> GetPatient(int id)
         {
@@ -43,6 +43,8 @@ namespace MSPatient.Controllers
             }
             return Ok(patient);
         }
+      
+        [Authorize(Roles = "organisateur")]//
         [HttpPost]
         public IActionResult Create([FromBody] Patient patient)
         {
@@ -56,8 +58,9 @@ namespace MSPatient.Controllers
         }
 
 
+       
         [Authorize(Roles = "organisateur")]
-         [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdatePatient(int id, Patient patient)
         {
             if (id != patient.Id)

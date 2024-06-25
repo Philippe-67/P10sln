@@ -28,7 +28,7 @@ public class NoteController : Controller
 
         return View("Deux");
     }
-    [Authorize(Roles = "praticien")]
+  //  [Authorize(Roles = "praticien")]
     
     [HttpGet]
     public async Task<IActionResult> Index(int patId)
@@ -70,7 +70,7 @@ public class NoteController : Controller
         }
     }
 
-    [Authorize(Roles = "praticien")]
+   // [Authorize(Roles = "praticien")]
     [HttpGet]
     public async Task<IActionResult> Delete(string id, int PatId)
     {
