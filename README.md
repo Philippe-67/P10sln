@@ -1,6 +1,6 @@
 
 # Mise en service
-Une fois démarée cette solution dockerisée, il convient de mettre dans votre barre de navication Localhost:6060; vous serez automatiquement dirigé vesr la page de connexion. Il existe deux rôles: oragnisateur et praticien dont les identifiant sont respectivement organisateur@test.com et praticien@test.com ; un mot de passe unique Password123!
+Une fois démarée cette solution dockerisée, il convient d'entrer dans votre barre de navigation:  Localhost:6060; vous serez automatiquement dirigé vers la page de connexion. Il existe deux rôles: "oragnisateur" et "praticien" dont les identifiants sont respectivement organisateur@test.com et praticien@test.com ; un mot de passe unique Password123! est à utiliser.
 
 # Suggestions d'actions à mener pour appliquer le Green Code à ce projet.
 
