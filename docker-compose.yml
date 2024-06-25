@@ -1,0 +1,125 @@
+version: '3.7'
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  msui-db:
+    container_name: msui-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong!Passw0rd1
+    networks:
+      - backend
+    ports:
+      - 1435:1434
+    volumes:
+      - msui-data:/var/opt/mssql
+
+  msui:
+    container_name: msui
+    image: ${DOCKER_REGISTRY-}msui
+    build:
+      context: .
+      dockerfile: msui/Dockerfile
+    networks:
+      - backend
+    ports:
+      - 6060:80
+    environment:
+      DatabaseServer: msui-db
+      DatabasePort: 1433
+      DatabaseUser: SA
+      DatabasePassword: YourStrong!Passw0rd1
+      DatabaseName: msuidb
+    depends_on:
+      - msui-db
+
+  mspatient:
+    container_name: mspatient
+    image: ${DOCKER_REGISTRY-}mspatient
+    build:
+      context: .
+      dockerfile: mspatient/Dockerfile
+    networks:
+      - backend
+    ports:
+      - 6002:80
+    environment:
+      DatabaseServer: mspatient-db
+      DatabasePort: 1433
+      DatabaseUser: SA
+      DatabasePassword: YourStrong!Passw0rd1
+      DatabaseName: mspatientdb
+    depends_on:
+      - mspatient-db
+
+  mspatient-db:
+    container_name: mspatient-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong!Passw0rd1
+    networks:
+      - backend
+    ports:
+      - 1434:1434
+    volumes:
+      - mspatient-data:/var/opt/mssql
+
+  msdiagnostic:
+    container_name: msdiagnostic
+    image: ${DOCKER_REGISTRY-}msdiagnostic
+    build:
+      context: .
+      dockerfile: msdiagnostic/Dockerfile
+    ports:
+      - 6005:80
+    networks:
+      - backend
+
+  gateway:
+    container_name: gateway
+    image: ${DOCKER_REGISTRY-}gateway
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports:
+      - 6001:80
+    networks:
+      - backend
+
+  
+  msnote-db:
+    container_name: msnote-db
+    image: mongo:latest
+    networks:
+        - backend
+    ports:
+        - 3005:27017
+    volumes:
+        - msnote-data:/data/db
+
+  msnote:
+    container_name: msnote
+    image: ${DOCKER_REGISTRY-}msnote
+    build:
+        context: .
+        dockerfile: msnote/Dockerfile
+    ports:
+        - 6003:80
+    networks:
+        - backend
+    depends_on:
+        - msnote-db
+ 
+
+volumes:
+  msui-data:
+    driver: local
+  mspatient-data:
+    driver: local
+  msnote-data:
+    driver: local

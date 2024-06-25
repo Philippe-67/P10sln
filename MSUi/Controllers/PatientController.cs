@@ -34,15 +34,15 @@ namespace MSUi.Controllers
             _logger = logger;
 
         }
-        [Authorize(Roles = "organisateur,praticien")]
+     
+       [Authorize(Roles = "organisateur,praticien")]
+     
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Récupération du jeton JWT de la session HTTP stocké dans la méthode Login de AuthenticationController.cs
-            ////////////////////////
-            // var token = _contextAccessor.HttpContext.Session.GetString("token");
+           
             var token = Request.Cookies["jwtToken"];
-            // // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
+           
             if (string.IsNullOrEmpty(token))
             {
                 return BadRequest("Token is missing");
@@ -60,7 +60,17 @@ namespace MSUi.Controllers
 
                     foreach (var patient in patients)
                     {
-                        HttpResponseMessage responseDiagnostic = await _httpClient.GetAsync($"api/Diagnostic/patientDiagnostic/{patient.Id}");
+                        
+
+                         token = Request.Cookies["jwtToken"];
+                        // // Ajouter le jeton JWT dans l'en-tête d'autorisation de votre HttpClient
+                        if (string.IsNullOrEmpty(token))
+                        {
+                            return BadRequest("Token is missing");
+                        }
+
+                       // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        HttpResponseMessage responseDiagnostic = await _httpClient.GetAsync($"/api/Diagnostic/patientDiagnostic/{patient.Id}");
                         if (responseDiagnostic.IsSuccessStatusCode)
                         {
                             string diagnosticData = await responseDiagnostic.Content.ReadAsStringAsync();

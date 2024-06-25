@@ -18,7 +18,7 @@ namespace MSUi.Controllers
             _httpClient.BaseAddress = new Uri(UriHelpers.GATEWAY_URI);
         }
 
-        [Authorize]
+     //   [Authorize]
         [HttpGet("patientsWithDiabetesRisk")]
         public async Task<IActionResult> Index()
         {

@@ -8,24 +8,24 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 //autho authent
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-       .AddJwtBearer(options =>
-       {
-           options.TokenValidationParameters = new TokenValidationParameters
-           {
-               ValidateIssuer = false,
-               ValidateAudience = false,
-               RequireExpirationTime = true,
-               ValidateLifetime = true,
-               ValidateIssuerSigningKey = true,
-               ValidIssuer = builder.Configuration.GetSection("JwtConfig:Issuer").Value,
-               ValidAudience = builder.Configuration.GetSection("JwtConfig:Audience").Value,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//       .AddJwtBearer(options =>
+//       {
+//           options.TokenValidationParameters = new TokenValidationParameters
+//           {
+//               ValidateIssuer = false,
+//               ValidateAudience = false,
+//               RequireExpirationTime = true,
+//               ValidateLifetime = true,
+//               ValidateIssuerSigningKey = true,
+//               ValidIssuer = builder.Configuration.GetSection("JwtConfig:Issuer").Value,
+//               ValidAudience = builder.Configuration.GetSection("JwtConfig:Audience").Value,
+//               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 
-               //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-               //    .GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value))
-           };
-       });
+//               //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+//               //    .GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value))
+//           };
+       //});
 
 // Add services to the container.
 
@@ -52,7 +52,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseSession();
 //app.UseAuthentication();
 //app.UseAuthorization();
 

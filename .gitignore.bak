@@ -361,4 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-*.cshtml
+/MSPatient/Dockerfile
+/Gateway/Dockerfile
+/MSNote/Dockerfile
+/MSDiagnostic/Dockerfile
+/MSUi/Dockerfile
+/docker-compose.override.yml
+/docker-compose.yml
+/docker-compose.dcproj

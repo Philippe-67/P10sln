@@ -1,0 +1,28 @@
+version: '3.7'
+ 
+services:
+  mspatient:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+    ports: 
+        - "80"
+  msui:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+    ports: 
+        - "80"
+  msdiagnostic:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+    ports: 
+        - "80"
+  gateway:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+    ports: 
+        - "80"
+  msnote:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+        - "80"

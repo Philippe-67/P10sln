@@ -8,6 +8,7 @@ namespace MSDiagnosticService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class DiagnosticController : ControllerBase
     {
         private readonly HttpClient _patientClient;
