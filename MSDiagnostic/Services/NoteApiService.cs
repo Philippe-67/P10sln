@@ -14,7 +14,7 @@ namespace MSDiagnostic.Services
         public NoteApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://gateway:80");// ("https://Localhost:7001");
+            _httpClient.BaseAddress = new Uri("https://Localhost:7001");
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 

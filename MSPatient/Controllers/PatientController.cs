@@ -11,7 +11,7 @@ namespace MSPatient.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
-  // [Authorize(Roles = "organisateur")]
+  
     public class PatientController : ControllerBase
     {
         private readonly PatientDbContext _context;
@@ -24,7 +24,7 @@ namespace MSPatient.Controllers
 
         }
 
-        [Authorize(Roles = "organisateur,praticien")] //
+        [Authorize(Roles = "organisateur,praticien")] 
         [HttpGet]
         public ActionResult<IEnumerable<Patient>> GetPatients()
         {
@@ -32,7 +32,7 @@ namespace MSPatient.Controllers
             return Ok(patients);
         }
 
-   //    [Authorize(Roles = "organisateur, praticien")] // ciqsp
+     
         [HttpGet("{id}")]
         public ActionResult<Patient> GetPatient(int id)
         {
@@ -43,8 +43,8 @@ namespace MSPatient.Controllers
             }
             return Ok(patient);
         }
-      
-        [Authorize(Roles = "organisateur")]//
+
+        [Authorize(Roles = "organisateur")]
         [HttpPost]
         public IActionResult Create([FromBody] Patient patient)
         {

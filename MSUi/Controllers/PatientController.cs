@@ -35,7 +35,7 @@ namespace MSUi.Controllers
 
         }
      
-    //   [Authorize(Roles = "organisateur,praticien")]
+      [Authorize(Roles = "organisateur,praticien")]//ici ok
      
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -69,7 +69,7 @@ namespace MSUi.Controllers
                             return BadRequest("Token is missing");
                         }
 
-                       // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         HttpResponseMessage responseDiagnostic = await _httpClient.GetAsync($"/api/Diagnostic/patientDiagnostic/{patient.Id}");
                         if (responseDiagnostic.IsSuccessStatusCode)
                         {

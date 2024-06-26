@@ -13,7 +13,7 @@ public class PatientApiService
     {
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri("https://Localhost/7001");
-        _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+  //      _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
     }
 
     public async Task<Patient> GetPatientById(int Id)
